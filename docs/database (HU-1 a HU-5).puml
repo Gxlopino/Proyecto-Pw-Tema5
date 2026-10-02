@@ -1,0 +1,418 @@
+@startuml db_model
+' =====================================================
+' Tema 5 - Mesa de ayuda de servicios del campus
+' Modelo de datos completo (HU-1 a HU-5)
+' PostgreSQL 16 + dbmate | snake_case, plural, ids enteros
+' Historias (responsable de escribir cada entidad):
+'   HU-1 Cuenta y acceso  : usuarios, unidades, invitaciones,
+'                           tokens_recuperacion, especialidades_declaradas
+'   HU-2 Catálogo         : sedes, ambientes, categorias,
+'                           tecnicos_categorias, prioridades
+'   HU-3 Registro tickets : tickets, reaperturas
+'   HU-4 Cola y asignación: asignaciones, cambios_prioridad
+'   HU-5 Atención y cierre: tickets_cierres, esperas_ticket,
+'                           bitacora_entradas, historial_estados,
+'                           estados_ticket
+' Convención: catálogos con datos propios = tabla,
+'             valores fijos y sin datos propios = enum nativo
+' =====================================================
+
+' Configuración visual
+skinparam class {
+    BackgroundColor White
+    ArrowColor #2C3E50
+    BorderColor #2C3E50
+}
+skinparam roundcorner 5
+skinparam shadowing false
+skinparam linetype ortho
+
+' ==========================================
+' ENUMS NATIVOS (CREATE TYPE ... AS ENUM)
+' ==========================================
+
+enum rol_usuario {
+  usuario
+  tecnico
+  supervisor
+}
+
+enum estado_usuario {
+  activo
+  inactivo
+}
+
+enum vinculo_usuario {
+  alumno
+  docente
+  administrativo
+  otro
+}
+
+enum tipo_ambiente {
+  aula
+  aula_magna
+  laboratorio
+  auditorio
+  biblioteca
+  otro
+}
+
+enum tipo_bitacora {
+  publico
+  interno
+}
+
+enum tipo_asignacion {
+  asignacion
+  reasignacion
+  autoasignacion
+  devolucion
+}
+
+enum estado_invitacion {
+  pendiente
+  aceptada
+  rechazada
+  vencida
+}
+
+' ==========================================
+' CATÁLOGOS (son tablas fuertes, pero con una lista de valores fijos que otras tablas consultan)
+' ==========================================
+
+entity "prioridades" as prioridades <<Fuerte · HU-2>> #DFF2E1 {
+  * id : integer [PK]
+  --
+  codigo : varchar(10) [UQ] (critica|alta|media|baja)
+  nombre : varchar(10)
+  orden : integer <<1 = más urgente, ordena la cola>>
+  color : varchar(7) (ej. #B4322B)
+}
+
+entity "estados_ticket" as estados_ticket <<Fuerte · HU-5>> #FBE0DB {
+  * id : integer [PK]
+  --
+  codigo : varchar(15) [UQ] (abierto|en_atencion|en_espera|resuelto|cerrado|reabierto|cancelado)
+  nombre : varchar(15)
+  color : varchar(7)
+  es_final : boolean <<cerrado y cancelado no admiten más cambios>>
+}
+
+entity "unidades" as unidades <<Fuerte · HU-1>> #DCEBFA {
+  * id : integer [PK]
+  --
+  nombre : varchar(60) [UQ] (carrera o área, ej. Ingeniería de Sistemas)
+}
+
+' ==========================================
+' ENTIDADES FUERTES (Independientes)
+' ==========================================
+
+entity "sedes" as sedes <<Fuerte · HU-2>> #DFF2E1 {
+  * id : integer [PK]
+  --
+  nombre : varchar(60) (ej. Campus Monterrico)
+  direccion : varchar(120)
+  activa : boolean
+}
+
+entity "ambientes" as ambientes <<Fuerte · HU-2>> #DFF2E1 {
+  * id : integer [PK]
+  --
+  sede_id : integer [FK]
+  codigo : varchar(15) [UQ] (ej. A-201, BIB-P2)
+  tipo : tipo_ambiente
+  nombre : varchar(60) (ej. Laboratorio de Redes)
+  pabellon : varchar(30)
+  piso : integer
+  capacidad : integer
+  activo : boolean
+}
+
+entity "categorias" as categorias <<Fuerte · HU-2>> #DFF2E1 {
+  * id : integer [PK]
+  --
+  nombre : varchar(60)
+  parent_id : integer [FK, Nullable] <<Null=Categoría, Value=Subcategoría>>
+  prioridad_defecto_id : integer [FK]
+  tiempo_esperado_horas : integer [> 0]
+  descripcion : varchar(240)
+  activa : boolean
+  creada_en : timestamp
+}
+
+entity "usuarios" as usuarios <<Fuerte · HU-1>> #DCEBFA {
+  * id : integer [PK]
+  --
+  nombres : varchar(60)
+  apellidos : varchar(60)
+  email : varchar(100) [UQ]
+  password_hash : varchar(100)
+  telefono : varchar(15)
+  unidad_id : integer [FK, Nullable]
+  vinculo : vinculo_usuario
+  rol : rol_usuario
+  estado : estado_usuario
+  intentos_fallidos : integer
+  bloqueado_hasta : timestamp [Nullable] <<Bloqueo temporal 15 min>>
+  ambiente_habitual_id : integer [FK, Nullable]
+  creado_en : timestamp
+  ultimo_acceso : timestamp [Nullable]
+}
+
+' ==========================================
+' ENTIDADES ASOCIATIVAS (Relacionan M:N)
+' ==========================================
+
+entity "tecnicos_categorias" as tecnicos_categorias <<Asociativa · HU-2>> #DFF2E1 {
+  * id : integer [PK]
+  --
+  tecnico_id : integer [FK, UQ con categoria_id]
+  categoria_id : integer [FK, UQ con tecnico_id]
+  habilitado_en : timestamp
+  ' Categorías que el técnico puede atender (matriz del supervisor)
+}
+
+entity "especialidades_declaradas" as especialidades_declaradas <<Asociativa · HU-1>> #DCEBFA {
+  * id : integer [PK]
+  --
+  usuario_id : integer [FK, UQ con categoria_id]
+  categoria_id : integer [FK, UQ con usuario_id]
+  ' Especialidad que el técnico elige al activar su cuenta (máx. 3)
+  ' Es la "especialidad declarada" de la matriz; la habilitación real está en tecnicos_categorias
+}
+
+' ==========================================
+' ENTIDADES DE ACCESO (HU-1)
+' ==========================================
+
+entity "invitaciones" as invitaciones <<Fuerte · HU-1>> #DCEBFA {
+  * id : integer [PK]
+  --
+  nombres : varchar(60)
+  apellidos : varchar(60)
+  email : varchar(100) [UQ]
+  rol : rol_usuario <<solo tecnico o supervisor>>
+  token : varchar(100) [UQ]
+  invitado_por_id : integer [FK]
+  estado : estado_invitacion
+  creada_en : timestamp
+  vence_en : timestamp
+  aceptada_en : timestamp [Nullable]
+}
+
+entity "tokens_recuperacion" as tokens_recuperacion <<Débil · HU-1>> #DCEBFA {
+  * id : integer [PK]
+  --
+  usuario_id : integer [FK]
+  token_hash : varchar(100) [UQ]
+  creado_en : timestamp
+  vence_en : timestamp <<30 minutos>>
+  usado_en : timestamp [Nullable]
+}
+
+' ==========================================
+' TICKET (núcleo liviano) Y SUS DETALLES
+' ==========================================
+
+entity "tickets" as tickets <<Fuerte · HU-3>> #FFF3CD {
+  * id : integer [PK]
+  --
+  codigo : varchar(20) [UQ] (ej. TCK-2026-00147)
+  asunto : varchar(120)
+  descripcion : varchar(600)
+  categoria_id : integer [FK]
+  subcategoria_id : integer [FK]
+  ambiente_id : integer [FK]
+  solicitante_id : integer [FK]
+  tecnico_id : integer [FK, Nullable]
+  prioridad_id : integer [FK]
+  prioridad_sugerida_id : integer [FK]
+  estado_id : integer [FK]
+  creado_en : timestamp
+  vence_en : timestamp
+  tiempo_espera_min : integer <<Acumulado, no cuenta para el tiempo esperado>>
+}
+
+entity "tickets_cierres" as tickets_cierres <<Débil · HU-5>> #FBE0DB {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK, UQ]
+  solucion : text
+  resuelto_en : timestamp
+  cerrado_en : timestamp [Nullable]
+  tiempo_atencion_min : integer [Nullable]
+  ' Solo existe para tickets resueltos o cerrados (1:1)
+}
+
+entity "esperas_ticket" as esperas_ticket <<Débil · HU-5>> #FBE0DB {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  motivo : text
+  fecha_retorno : timestamp
+  inicio_en : timestamp
+  fin_en : timestamp [Nullable]
+  ' Una fila por cada vez que el ticket entra en espera
+}
+
+entity "reaperturas" as reaperturas <<Débil · HU-3>> #FFF3CD {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  autor_id : integer [FK]
+  motivo : text
+  creado_en : timestamp
+  ' Una fila por cada reapertura (dentro de 7 días del cierre)
+}
+
+entity "bitacora_entradas" as bitacora_entradas <<Débil · HU-5>> #FBE0DB {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  autor_id : integer [FK]
+  tipo : tipo_bitacora
+  texto : text
+  creado_en : timestamp
+}
+
+entity "historial_estados" as historial_estados <<Débil · HU-5>> #FBE0DB {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  estado_anterior_id : integer [FK, Nullable] <<Null en el primer registro (creación)>>
+  estado_nuevo_id : integer [FK]
+  autor_id : integer [FK]
+  motivo : text [Nullable] <<También guarda el motivo de cancelación>>
+  permanencia_min : integer <<Minutos en el estado anterior>>
+  creado_en : timestamp
+}
+
+entity "asignaciones" as asignaciones <<Débil · HU-4>> #EBDDF3 {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  tecnico_id : integer [FK, Nullable] <<Null = devuelto a la cola>>
+  asignado_por_id : integer [FK]
+  tipo : tipo_asignacion
+  motivo : varchar(240)
+  nota : text [Nullable]
+  creado_en : timestamp
+}
+
+entity "cambios_prioridad" as cambios_prioridad <<Débil · HU-4>> #EBDDF3 {
+  * id : integer [PK]
+  --
+  ticket_id : integer [FK]
+  anterior_id : integer [FK]
+  nueva_id : integer [FK]
+  motivo : varchar(240)
+  autor_id : integer [FK]
+  creado_en : timestamp
+}
+
+' ==========================================
+' RELACIONES
+' ==========================================
+
+' Sede y ambiente
+ambientes }o--|| sedes : "sede_id"
+
+' Relaciones de Usuario
+usuarios }o--o| ambientes : "ambiente_habitual_id"
+usuarios }o--o| unidades : "unidad_id"
+
+' Relación recursiva de Categoría (Subcategoría)
+categorias }o--o| categorias : "parent_id"
+categorias }o--|| prioridades : "prioridad_defecto_id"
+
+' Relaciones Asociativas (especialidades)
+tecnicos_categorias }o--|| usuarios : "tecnico_id"
+tecnicos_categorias }o--|| categorias : "categoria_id"
+especialidades_declaradas }o--|| usuarios : "usuario_id"
+especialidades_declaradas }o--|| categorias : "categoria_id"
+
+' Relaciones de acceso (HU-1)
+invitaciones }o--|| usuarios : "invitado_por_id (Supervisor)"
+tokens_recuperacion }o--|| usuarios : "usuario_id"
+
+' Relaciones del Ticket (Depende de Múltiples Fuertes)
+tickets }o--|| categorias : "categoria_id"
+tickets }o--|| categorias : "subcategoria_id"
+tickets }o--|| ambientes : "ambiente_id"
+tickets }o--|| usuarios : "solicitante_id"
+tickets }o--o| usuarios : "tecnico_id (Asignado)"
+tickets }o--|| prioridades : "prioridad_id"
+tickets }o--|| prioridades : "prioridad_sugerida_id"
+tickets }o--|| estados_ticket : "estado_id"
+
+' Detalles del ticket
+tickets_cierres |o--|| tickets : "ticket_id (Único)"
+esperas_ticket }o--|| tickets : "ticket_id"
+reaperturas }o--|| tickets : "ticket_id"
+reaperturas }o--|| usuarios : "autor_id"
+
+' Relaciones de las Entidades Débiles del Ticket
+bitacora_entradas }o--|| tickets : "ticket_id"
+bitacora_entradas }o--|| usuarios : "autor_id"
+
+historial_estados }o--|| tickets : "ticket_id"
+historial_estados }o--|| usuarios : "autor_id"
+historial_estados }o--o| estados_ticket : "estado_anterior_id"
+historial_estados }o--|| estados_ticket : "estado_nuevo_id"
+
+asignaciones }o--|| tickets : "ticket_id"
+asignaciones }o--o| usuarios : "tecnico_id"
+asignaciones }o--|| usuarios : "asignado_por_id"
+
+cambios_prioridad }o--|| tickets : "ticket_id"
+cambios_prioridad }o--|| usuarios : "autor_id"
+cambios_prioridad }o--|| prioridades : "anterior_id"
+cambios_prioridad }o--|| prioridades : "nueva_id"
+
+' ==========================================
+' NOTAS DE REGLAS DE NEGOCIO
+' ==========================================
+
+note right of tickets
+  **Transiciones válidas**
+  abierto -> en_atencion | cancelado
+  en_atencion -> en_espera | resuelto
+  en_espera -> en_atencion
+  resuelto -> cerrado
+  cerrado -> reabierto (hasta 7 días)
+  reabierto -> en_atencion
+  categoria_id = categoría padre y
+  subcategoria_id = hija de esa categoría.
+  Cancelar solo si no fue asignado.
+  El tiempo en espera no cuenta
+  para el tiempo esperado.
+  Fechas de asignación, atención y
+  cancelación salen de asignaciones
+  e historial_estados.
+end note
+
+note bottom of usuarios
+  Tras 5 intentos fallidos:
+  bloqueado_hasta = ahora + 15 min.
+end note
+
+note bottom of prioridades
+  Datos iniciales (fill):
+  critica 2 h | alta 8 h | media 24 h | baja 72 h
+  (el tiempo esperado vive en categorias).
+  La API devuelve el codigo en texto,
+  no el id.
+end note
+
+legend right
+  |= Color |= Historia |
+  |<#DCEBFA>   | HU-1 Cuenta y acceso |
+  |<#DFF2E1>   | HU-2 Catálogo de servicios |
+  |<#FFF3CD>   | HU-3 Registro de tickets |
+  |<#EBDDF3>   | HU-4 Cola y asignación |
+  |<#FBE0DB>   | HU-5 Atención y cierre |
+endlegend
+
+@enduml
