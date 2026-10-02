@@ -28,6 +28,11 @@ Instalar dependencias:
 
     npm install
 
-npm install -g vercel
-vercel login
-vercel --prod
+Instalar server:
+    npm install -g vercel
+    vercel login
+    vercel --prod
+
+Instalar Dependencias:
+    vscode-pdf
+    cweijan.vscode-office
