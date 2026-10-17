@@ -1,22 +1,24 @@
+<!-- views/layouts/admin.ejs -->
+<!-- Mini-app React de un rol. Recibe "rol" (usuario | tecnico | supervisor) desde el controller. -->
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- CSS del Admin o de React -->
-   <link rel="stylesheet" href="/dist/css/index.css">
-  <link rel="stylesheet" href="/dist/css/admin.css">
+
+  <!-- CSS compartido (Bootstrap + sistema de diseño) -->
+  <link rel="stylesheet" href="/dist/css/app.css">
+  <!-- CSS exclusivo del rol (src/pages/<rol>/<rol>.css) -->
+  <link rel="stylesheet" href="/dist/css/<%= rol %>.css">
 
   <title><%= title %></title>
 </head>
 <body>
 
-  <!-- Renderizado del cuerpo de EJS -->
   <%- body %>
 
-  <!-- JavaScript principal que arranca React -->
-  <script type="module" src="/dist/js/admin.js"></script>
+  <!-- JavaScript de la mini-app del rol -->
+  <script type="module" src="/dist/js/<%= rol %>.js"></script>
 </body>
 </html>

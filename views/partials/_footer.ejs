@@ -1,180 +1,27 @@
-<!-- views/partials/_footer.ejs -->
-<footer class="bg-dark text-white mt-auto">
-
-  <div class="container py-5">
-
+<!-- views/partials/_footer.ejs · pie público -->
+<% const reportar = !isAuthenticated ? '/login' : (role === 'usuario' ? '/usuario/tickets/nuevo' : rutaInicio); %>
+<footer class="public-footer mt-auto">
+  <div class="container-xl py-4">
     <div class="row g-4">
-
-      <!-- Información -->
-      <div class="col-12 col-md-6 col-lg-4">
-
-        <div class="d-flex align-items-center mb-3">
-
-          <i class="bi bi-shield-fill-check text-success fs-3 me-2"></i>
-
-          <h5 class="mb-0 fw-bold">
-            PlayerStats
-          </h5>
-
-        </div>
-
-        <p class="text-secondary mb-0">
-          Plataforma para consultar, explorar y gestionar
-          información y estadísticas de jugadores de FIFA / EA FC.
-        </p>
-
+      <div class="col-md-5">
+        <div class="fw-semibold text-white mb-2">Mesa de Ayuda de Servicios</div>
+        <div>Universidad de Lima · Dirección de Infraestructura y Servicios</div>
+        <div>soporte.campus@ulima.edu.pe · anexo 30500</div>
+        <div>Atención de lunes a sábado, 07:00 a 21:00</div>
       </div>
-
-      <!-- Navegación -->
-      <div class="col-6 col-md-3 col-lg-2">
-
-        <h6 class="text-uppercase fw-bold mb-3">
-          Navegación
-        </h6>
-
-        <ul class="list-unstyled">
-
-          <li class="mb-2">
-            <a
-              href="/"
-              class="text-secondary text-decoration-none">
-              Inicio
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/players"
-              class="text-secondary text-decoration-none">
-              Jugadores
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/teams"
-              class="text-secondary text-decoration-none">
-              Equipos
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/leagues"
-              class="text-secondary text-decoration-none">
-              Ligas
-            </a>
-          </li>
-
-        </ul>
-
+      <div class="col-6 col-md-3">
+        <div class="footer-title mb-2">Reportar</div>
+        <div><a href="<%= reportar %>">Registrar un ticket</a></div>
+        <div><a href="<%= isAuthenticated ? rutaInicio : '/login' %>">Seguir un ticket</a></div>
+        <div><a href="/#categorias">Categorías de servicio</a></div>
       </div>
-
-      <!-- Explorar -->
-      <div class="col-6 col-md-3 col-lg-3">
-
-        <h6 class="text-uppercase fw-bold mb-3">
-          Explorar
-        </h6>
-
-        <ul class="list-unstyled">
-
-          <li class="mb-2">
-            <a
-              href="/players"
-              class="text-secondary text-decoration-none">
-              Todos los jugadores
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/players?sort=ranking"
-              class="text-secondary text-decoration-none">
-              Mejor valorados
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/players?position=GK"
-              class="text-secondary text-decoration-none">
-              Arqueros
-            </a>
-          </li>
-
-          <li class="mb-2">
-            <a
-              href="/players?position=ST"
-              class="text-secondary text-decoration-none">
-              Delanteros
-            </a>
-          </li>
-
-        </ul>
-
+      <div class="col-6 col-md-4">
+        <div class="footer-title mb-2">Ayuda</div>
+        <div><a href="/#como-reportar">Preguntas frecuentes</a></div>
+        <div><a href="/#tiempos">Tiempos de atención esperados</a></div>
+        <div>Emergencias eléctricas · anexo 30111</div>
       </div>
-
-      <!-- Redes / proyecto -->
-      <div class="col-12 col-lg-3">
-
-        <h6 class="text-uppercase fw-bold mb-3">
-          PlayerStats
-        </h6>
-
-        <p class="text-secondary small">
-          Base de datos orientada a la consulta y gestión
-          de estadísticas de jugadores.
-        </p>
-
-        <div class="d-flex gap-2">
-
-          <a
-            href="#"
-            class="btn btn-outline-secondary btn-sm rounded-circle">
-
-            <i class="bi bi-github"></i>
-
-          </a>
-
-          <a
-            href="#"
-            class="btn btn-outline-secondary btn-sm rounded-circle">
-
-            <i class="bi bi-linkedin"></i>
-
-          </a>
-
-          <a
-            href="#"
-            class="btn btn-outline-secondary btn-sm rounded-circle">
-
-            <i class="bi bi-instagram"></i>
-
-          </a>
-
-        </div>
-
-      </div>
-
     </div>
-
-    <hr class="border-secondary my-4">
-
-    <!-- Copyright -->
-    <div
-      class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-
-      <p class="text-secondary small mb-2 mb-md-0">
-        © 2026 PlayerStats. Todos los derechos reservados.
-      </p>
-
-      <p class="text-secondary small mb-0">
-        Proyecto de gestión de datos deportivos
-      </p>
-
-    </div>
-
+    <div class="text-end small mt-3" style="opacity: 0.7;">© 2026 Universidad de Lima · Términos · Privacidad</div>
   </div>
-
 </footer>

@@ -1,226 +1,32 @@
-<!-- views/partials/_navbar.ejs -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
-
-  <div class="container">
-
-    <!-- Brand -->
-    <a
-      class="navbar-brand fw-bold text-success d-flex align-items-center"
-      href="/">
-
-      <i class="fa-solid fa-shield-halved fs-4 me-2"></i>
-
-      <span>
-        PlayerStats
-      </span>
-
+<!-- views/partials/_navbar.ejs · cabecera pública (visitante) -->
+<nav class="navbar navbar-expand-lg public-header py-2">
+  <div class="container-xl">
+    <a href="/" class="brand d-flex align-items-center gap-2">
+      <span class="brand-mark"></span> Mesa de Ayuda <span class="text-muted fw-normal d-none d-sm-inline">· Campus Ulima</span>
     </a>
-
-
-    <!-- Mobile button -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarContent"
-      aria-controls="navbarContent"
-      aria-expanded="false"
-      aria-label="Abrir menú">
-
+    <% if (typeof currentPage !== 'undefined' && currentPage === 'home') { %>
+      <!-- Easter egg: Claude bailando (solo en la página principal) -->
+      <img src="/assets/img/claude-bailando.svg" alt="Claude bailando" title="¡Gracias por pasar!" width="34" height="31" class="ms-2 me-auto me-lg-0">
+    <% } %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNav" aria-controls="publicNav" aria-expanded="false" aria-label="Abrir menú">
       <span class="navbar-toggler-icon"></span>
-
     </button>
-
-
-    <!-- Navbar content -->
-    <div
-      class="collapse navbar-collapse"
-      id="navbarContent">
-
-      <!-- Main navigation -->
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-        <!-- Inicio -->
-        <li class="nav-item">
-
-          <a
-            class="nav-link active"
-            href="/">
-
-            <i class="fa-solid fa-house me-1"></i>
-            Inicio
-
-          </a>
-
-        </li>
-
-
-        <!-- Jugadores -->
-        <li class="nav-item">
-
-          <a
-            class="nav-link"
-            href="/players">
-
-            <i class="fa-solid fa-users me-1"></i>
-            Jugadores
-
-          </a>
-
-        </li>
-
-
-        <!-- Equipos -->
-        <li class="nav-item">
-
-          <a
-            class="nav-link"
-            href="/teams">
-
-            <i class="fa-solid fa-shield-halved me-1"></i>
-            Equipos
-
-          </a>
-
-        </li>
-
-
-        <!-- Ligas -->
-        <li class="nav-item">
-
-          <a
-            class="nav-link"
-            href="/leagues">
-
-            <i class="fa-solid fa-trophy me-1"></i>
-            Ligas
-
-          </a>
-
-        </li>
-
-
-        <!-- Explorar -->
-        <li class="nav-item dropdown">
-
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false">
-
-            <i class="fa-solid fa-compass me-1"></i>
-            Explorar
-
-          </a>
-
-
-          <ul class="dropdown-menu shadow">
-
-            <li>
-              <h6 class="dropdown-header">
-                Posiciones
-              </h6>
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                href="/players?position=ST">
-
-                <i class="fa-solid fa-futbol me-2"></i>
-                Delanteros
-
-              </a>
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                href="/players?position=CM">
-
-                <i class="fa-solid fa-arrows-left-right me-2"></i>
-                Mediocampistas
-
-              </a>
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                href="/players?position=CB">
-
-                <i class="fa-solid fa-shield me-2"></i>
-                Defensas
-
-              </a>
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                href="/players?position=GK">
-
-                <i class="fa-solid fa-hand me-2"></i>
-                Arqueros
-
-              </a>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a
-                class="dropdown-item"
-                href="/players">
-
-                <i class="fa-solid fa-table-cells-large me-2"></i>
-                Todos los jugadores
-
-              </a>
-            </li>
-
-          </ul>
-
-        </li>
-
+    <div class="collapse navbar-collapse" id="publicNav">
+      <ul class="navbar-nav me-auto ms-lg-4">
+        <li class="nav-item"><a href="/" class="nav-link <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Inicio</a></li>
+        <li class="nav-item"><a href="/#como-reportar" class="nav-link">Cómo reportar</a></li>
+        <li class="nav-item"><a href="/#categorias" class="nav-link">Categorías de servicio</a></li>
+        <li class="nav-item"><a href="/#tiempos" class="nav-link">Tiempos de atención</a></li>
       </ul>
-
-
-      <!-- Search -->
-      <form
-        class="d-flex"
-        role="search"
-        action="/players"
-        method="GET">
-
-        <div class="input-group">
-
-          <input
-            class="form-control"
-            type="search"
-            name="search"
-            placeholder="Buscar jugador..."
-            aria-label="Buscar jugador"
-          >
-
-          <button
-            class="btn btn-success"
-            type="submit">
-
-            <i class="fa-solid fa-magnifying-glass"></i>
-
-          </button>
-
-        </div>
-
-      </form>
-
+      <div class="d-flex gap-2 py-2 py-lg-0">
+        <% if (isAuthenticated) { %>
+          <a href="<%= rutaInicio %>" class="btn btn-primary btn-sm">Ir a mi panel</a>
+          <a href="/logout" class="btn btn-outline-primary btn-sm">Cerrar sesión</a>
+        <% } else { %>
+          <a href="/login" class="btn btn-outline-primary btn-sm">Iniciar sesión</a>
+          <a href="/registro" class="btn btn-primary btn-sm">Registrarme</a>
+        <% } %>
+      </div>
     </div>
-
   </div>
-
 </nav>

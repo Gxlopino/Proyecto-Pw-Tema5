@@ -14,16 +14,35 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react()
     ],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
+        '@seed': resolve(__dirname, 'db/seed'),
+      },
+    },
     build: {
       emptyOutDir: false,
       outDir: 'public/dist',
       minify: shouldMinify,
       rollupOptions: {
+        // Una mini-app por rol (visitante, usuario, técnico y supervisor). Cada layout carga css/app.css, css/<rol>.css y js/<rol>.js
         input: {
-          'web': resolve(__dirname, 'src/entries/web.jsx'),
-          'admin': resolve(__dirname, 'src/entries/admin.jsx'),
+          'visitante': resolve(__dirname, 'src/entries/visitante.jsx'),
+          'usuario': resolve(__dirname, 'src/entries/usuario.jsx'),
+          'tecnico': resolve(__dirname, 'src/entries/tecnico.jsx'),
+          'supervisor': resolve(__dirname, 'src/entries/supervisor.jsx'),
         },
         output: {
+          // - js/app.js + css/app.css: lo común a todas las mini-apps (librerías, Bootstrap, src/entries/app.css, context,
+          //   services, helpers y widgets).
+          // - js/atencion.js: detalle e historial del ticket (HU-5), que usan el técnico y el supervisor.
+          // - js/<rol>.js + css/<rol>.css: las páginas, los parciales y el CSS propio de cada rol (src/pages/<rol>/<rol>.css).
+          manualChunks: (id) => {
+            const ruta = id.replace(/\\/g, '/');
+            if (/\/src\/pages\/tecnico\/(DetalleTicket|HistorialCambios)\.jsx$/.test(ruta)) return 'atencion';
+            if (/\/src\/(entries\/\w+\.jsx|pages\/|partials\/)/.test(ruta)) return undefined;
+            return 'app';
+          },
           entryFileNames: `js/[name]${minSuffix}.js`,
           chunkFileNames: `js/[name]${minSuffix}.js`,
           assetFileNames: (assetInfo) => {

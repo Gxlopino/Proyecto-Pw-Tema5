@@ -1,20 +1,15 @@
-<!-- views/partials/_flash_message.ejs -->
-<% if (successMessage && successMessage.length > 0) { %>
-  <% successMessage.forEach(msg => { %>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <i class="fa fa-check-circle me-2"></i>
-      <%= successMessage %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% }) %>
+<!-- views/partials/_flash_message.ejs · mensajes de req.flash('success' | 'error') -->
+<% if (successMessage && successMessage.length) { %>
+  <div class="container-xl pt-3">
+    <% successMessage.forEach(function (msg) { %>
+      <div class="alert alert-success small mb-2" role="alert"><%= msg %></div>
+    <% }) %>
+  </div>
 <% } %>
-
-<% if (errorMessage && errorMessage.length > 0) { %>
-  <% errorMessage.forEach(msg => { %>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      <i class="fa fa-check-circle me-2"></i>
-      <%= errorMessage %>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  <% }) %>
+<% if (errorMessage && errorMessage.length) { %>
+  <div class="container-xl pt-3">
+    <% errorMessage.forEach(function (msg) { %>
+      <div class="alert alert-danger small mb-2" role="alert"><%= msg %></div>
+    <% }) %>
+  </div>
 <% } %>

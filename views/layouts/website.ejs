@@ -1,74 +1,41 @@
 <!-- views/layouts/website.ejs -->
-
 <!doctype html>
-
 <html lang="es">
-
 <head>
-
   <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link
-    rel="icon"
-    type="image/x-icon"
-    href="/favicon.ico"
-  >
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-
-  <!-- CSS propio -->
-   <link
-    rel="stylesheet"
-    href="/dist/css/index.css"
-  >
-  <link
-    rel="stylesheet"
-    href="/dist/css/web.css"
-  >
+<% if (typeof app !== 'undefined') { %>
+  <!-- Mini-app React: Bootstrap y el sistema de diseño vienen en el build de Vite -->
+  <link rel="stylesheet" href="/dist/css/app.css">
+  <!-- CSS exclusivo del visitante (src/pages/visitante/visitante.css) -->
+  <link rel="stylesheet" href="/dist/css/<%= app %>.css">
+<% } else { %>
+  <!-- Bootstrap 5.3.8 + Font Awesome + sistema de diseño -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
+<% } %>
 
   <title><%= title %></title>
-
 </head>
+<body class="d-flex flex-column min-vh-100">
 
+  <%- include('../partials/_navbar') %>
 
-<body class="d-flex flex-column min-vh-100 m-0 p-0">
-
-
-  <!-- =====================================================
-       NAVBAR
-  ====================================================== -->
-
-  <%- include("partials/_navbar") %>
-
-
-  <!-- =====================================================
-       CONTENIDO
-  ====================================================== -->
-
-  <main class="flex-grow-1 w-100 m-0 p-0">
-
+  <main class="flex-grow-1">
+    <%- include('../partials/_flash_message') %>
     <%- body %>
-
   </main>
 
+  <%- include('../partials/_footer') %>
 
-  <!-- =====================================================
-       FOOTER
-  ====================================================== -->
-
-  <%- include("partials/_footer") %>
-
-
-  <!-- JavaScript propio -->
-  <script
-    type="module"
-    src="/dist/js/web.js">
-  </script>
-
+<% if (typeof app !== 'undefined') { %>
+  <!-- JavaScript de la mini-app (incluye Bootstrap) -->
+  <script type="module" src="/dist/js/<%= app %>.js"></script>
+<% } else { %>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<% } %>
 </body>
-
 </html>

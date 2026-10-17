@@ -1,0 +1,49 @@
+<!-- views/layouts/access.ejs -->
+<!-- Página centrada sin navbar: login, 401, 403 y 404 (403 recibe "nombre" y lleva cabecera con la sesión) -->
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap 5.3.8 + Font Awesome + sistema de diseño -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.3.1/css/all.min.css">
+  <link rel="stylesheet" href="/assets/css/site.css">
+
+  <title><%= title %></title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<% if (typeof nombre !== 'undefined') { %>
+  <!-- Cabecera simple con la sesión (403) -->
+  <header class="access-header">
+    <div class="container-xl d-flex align-items-center gap-3 py-2">
+      <a href="/" class="access-brand d-flex align-items-center gap-2 me-auto"><span class="brand-mark"></span> Mesa de Ayuda</a>
+      <span class="small text-end lh-sm">
+        <span class="d-block fw-semibold"><%= nombre %></span>
+        <span class="label-caps"><%= rol %></span>
+      </span>
+      <a href="/logout" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-right-from-bracket me-1"></i>Cerrar sesión</a>
+    </div>
+  </header>
+<% } %>
+
+  <main class="flex-grow-1 d-flex align-items-center py-5">
+    <div class="container-xl">
+<% if (typeof nombre === 'undefined') { %>
+      <div class="text-center mb-4">
+        <a href="/" class="access-brand d-inline-flex align-items-center gap-2">
+          <span class="brand-mark"></span> Mesa de Ayuda <span class="text-muted fw-normal">· Campus Ulima</span>
+        </a>
+      </div>
+<% } %>
+      <%- include('../partials/_flash_message') %>
+      <%- body %>
+    </div>
+  </main>
+
+  <footer class="text-center small text-muted py-3">© 2026 Universidad de Lima · Mesa de Ayuda de Servicios del Campus</footer>
+</body>
+</html>

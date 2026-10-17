@@ -1,0 +1,16 @@
+<!-- views/403.ejs -->
+<!-- HU-1 · 1.7 Acceso denegado (403) · Con sesión, pero con un rol que no corresponde (middlewares solo<Rol>) -->
+<% layout("layouts/access") %>
+
+<div class="card p-4 p-lg-5 mx-auto" style="max-width: 720px;">
+  <div class="big-number mb-2">403</div>
+  <h1 class="mb-2">No tienes permiso para ver <%= seccion %></h1>
+  <p class="text-muted">
+    Tu cuenta tiene el rol de <%= rol %>. <%= exclusivo %>
+    Si necesitas ese acceso, solicítalo a Infraestructura y Servicios.
+  </p>
+  <div class="d-flex flex-wrap gap-2">
+    <a href="<%= rutaInicio %>" class="btn btn-primary"><i class="fa-solid fa-house me-2"></i><%= role === 'usuario' ? 'Ir a mis tickets' : 'Ir a mi vista principal' %></a>
+    <a href="mailto:soporte.campus@ulima.edu.pe?subject=Solicitud%20de%20acceso%20a%20la%20Mesa%20de%20Ayuda" class="btn btn-outline-primary"><i class="fa-solid fa-envelope me-2"></i>Solicitar acceso</a>
+  </div>
+</div>
