@@ -1,0 +1,99 @@
+<!-- views/visitante/home.ejs -->
+<!-- HU-1 · 1.1 Landing pública · Visitante -->
+<% layout("layouts/website") %>
+<%
+  const pasos = [
+    { titulo: 'Inicia sesión', texto: 'Ingresa con tu correo institucional. Si no tienes cuenta, regístrate en un minuto.' },
+    { titulo: 'Registra el ticket', texto: 'Elige la categoría, el ambiente (el código que aparece en la puerta) y describe la falla.' },
+    { titulo: 'Guarda el código', texto: 'Recibirás un código TCK-2026-… para buscar el ticket en cualquier momento.' },
+    { titulo: 'Sigue la atención', texto: 'El supervisor lo prioriza y asigna a un técnico; verás cada avance en la bitácora.' },
+  ];
+  const destinoReportar = !isAuthenticated ? '/login' : (role === 'usuario' ? '/usuario/tickets/nuevo' : rutaInicio);
+%>
+
+<div class="container-xl py-4">
+  <section class="card p-4 p-lg-5 mb-3">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-6">
+        <div class="eyebrow mb-2">Infraestructura y servicios del campus</div>
+        <h1 class="display-6 fw-bold mb-3">Reporta una falla del campus y sigue su atención en un solo lugar</h1>
+        <p class="text-muted mb-4">
+          Proyectores, aire acondicionado, red, mobiliario, electricidad, limpieza y accesos. Registra el ticket con el
+          ambiente y la categoría; el supervisor lo prioriza y lo asigna a un técnico el mismo día.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="<%= destinoReportar %>" class="btn btn-primary">Registrar un ticket</a>
+          <a href="#como-reportar" class="btn btn-outline-primary">Ver cómo reportar</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center text-muted rounded border"
+          style="min-height: 280px; background: repeating-linear-gradient(135deg,#eef2f5 0 12px,#f6f8fa 12px 24px);"
+        >
+          <i class="fa-solid fa-screwdriver-wrench fa-3x mb-3" style="color: var(--color-primary);"></i>
+          <span class="font-mono small">Atención técnica en aulas, laboratorios y auditorios</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="row g-3 mb-5">
+    <div class="col-sm-6 col-lg-3"><div class="card top-accent h-100 p-3"><h3>Qué se reporta</h3><p class="small text-muted mb-0">Audiovisuales, climatización, redes, mobiliario, eléctrico, limpieza y cerraduras.</p></div></div>
+    <div class="col-sm-6 col-lg-3"><div class="card top-accent h-100 p-3"><h3>Cómo se prioriza</h3><p class="small text-muted mb-0">Crítica, alta, media y baja según el impacto en clases y en la seguridad.</p></div></div>
+    <div class="col-sm-6 col-lg-3"><div class="card top-accent h-100 p-3"><h3>Tiempo de atención</h3><p class="small text-muted mb-0"><%= prioridades.map((p) => `${p.nombre} ${p.horas} h`).join(' · ') %> hábiles.</p></div></div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="surface-soft h-100 p-3">
+        <h3 style="color: var(--color-primary-dark);"><i class="fa-solid fa-triangle-exclamation me-2"></i>Emergencias</h3>
+        <p class="small mb-0">Fugas de agua o riesgo eléctrico: llama al anexo 30111 y registra el ticket después.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="como-reportar" class="mb-5" style="scroll-margin-top: 80px;">
+    <h2 class="mb-3">Cómo reportar una incidencia</h2>
+    <div class="row g-3">
+      <% pasos.forEach((p, i) => { %>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card h-100 p-3">
+            <div class="big-code mb-2" style="font-size: 22px;">0<%= i + 1 %></div>
+            <h3><%= p.titulo %></h3>
+            <p class="small text-muted mb-0"><%= p.texto %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section id="categorias" class="mb-5" style="scroll-margin-top: 80px;">
+    <h2 class="mb-3">Categorías de servicio</h2>
+    <div class="row g-3">
+      <% categorias.forEach((c) => { %>
+        <div class="col-sm-6 col-lg-4">
+          <div class="card h-100 p-3">
+            <h3 class="mb-1"><%= c.nombre %></h3>
+            <p class="small text-muted mb-2"><%= c.descripcion %></p>
+            <div class="small"><%= c.subcategorias.map((s) => s.nombre).join(' · ') %></div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section id="tiempos" class="mb-4" style="scroll-margin-top: 80px;">
+    <h2 class="mb-3">Tiempos de atención esperados</h2>
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-app">
+          <thead><tr><th>Prioridad</th><th>Cuándo aplica</th><th>Atención dentro de</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-critica">Crítica</span></td><td>Impide dictar clase o hay riesgo para la seguridad.</td><td>2 horas hábiles</td></tr>
+            <tr><td><span class="tag tag-alta">Alta</span></td><td>Afecta una clase o evento del día.</td><td>8 horas hábiles</td></tr>
+            <tr><td><span class="tag tag-media">Media</span></td><td>Molesta pero permite seguir trabajando.</td><td>24 horas hábiles</td></tr>
+            <tr><td><span class="tag tag-baja">Baja</span></td><td>Mejora o desperfecto menor.</td><td>72 horas hábiles</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

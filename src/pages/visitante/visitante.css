@@ -1,0 +1,23 @@
+/* src/pages/visitante/visitante.css */
+/* Estilos solo de la mini-app del visitante (visitante.js): cabecera y pie de views/layouts/website.ejs y páginas de HU-1.
+   Lo común a todos los roles está en src/entries/app.css (se compila en css/app.css). */
+
+/* ---------- Layout público ---------- */
+.public-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+.public-header .brand { color: var(--color-text); text-decoration: none; font-weight: 600; }
+.public-header .brand-mark { width: 22px; height: 22px; background: var(--color-primary); border-radius: 3px; display: inline-block; }
+.public-header .nav-link { color: var(--color-text); font-size: 14px; font-weight: 500; }
+.public-header .nav-link.active, .public-header .nav-link:hover { color: var(--color-primary); }
+.public-footer { background: var(--color-primary-dark); color: rgba(255, 255, 255, .85); font-size: 13px; }
+.public-footer a { color: rgba(255, 255, 255, .85); text-decoration: none; }
+.public-footer a:hover { color: #fff; text-decoration: underline; }
+.public-footer .footer-title { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .55); }
+.eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--color-accent); font-weight: 600; }
+.hero-img { object-fit: cover; width: 100%; height: 100%; min-height: 260px; border-radius: 4px; }
+
+/* ---------- Fuerza de contraseña (RecuperarPassword) ---------- */
+.strength { display: flex; gap: 6px; }
+.strength span { flex: 1; height: 4px; border-radius: 2px; background: var(--color-border); }
+.strength span.on-1 { background: var(--color-danger); }
+.strength span.on-2 { background: var(--color-warning); }
+.strength span.on-3 { background: var(--color-success); }
