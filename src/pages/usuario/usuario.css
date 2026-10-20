@@ -1,0 +1,6 @@
+/* src/pages/usuario/usuario.css */
+/* Estilos solo de la mini-app del usuario (usuario.js).
+   Lo común a todos los roles está en src/entries/app.css (se compila en css/app.css). */
+
+/* ---------- Línea de tiempo: pasos que faltan (DetalleTicket, HU-3) ---------- */
+.timeline li.pendiente::before { background: #fff; border: 2px solid var(--color-border); }
