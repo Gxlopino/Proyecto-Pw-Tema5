@@ -1,0 +1,17 @@
+/* src/pages/supervisor/supervisor.css */
+/* Estilos solo de la mini-app del supervisor (supervisor.js).
+   Lo común a todos los roles está en src/entries/app.css (se compila en css/app.css). */
+
+/* ---------- Cola: fila seleccionada (HU-4) ---------- */
+.table-app tbody tr.row-selected > td:not(.prio-bar) { --bs-table-bg: var(--color-primary-soft); }
+
+/* ---------- Cola: barra de acciones en lote (HU-4) ---------- */
+.bulk-bar {
+  position: sticky; bottom: 16px; z-index: 20;
+  background: var(--color-primary-dark); color: #fff;
+  border-radius: 4px; box-shadow: 0 8px 20px rgba(20, 28, 36, .25);
+}
+
+/* ---------- Matriz técnicos por categoría (HU-2) ---------- */
+.matrix td, .matrix th { text-align: center; }
+.matrix td:first-child, .matrix th:first-child, .matrix td:nth-child(2), .matrix th:nth-child(2) { text-align: left; }
