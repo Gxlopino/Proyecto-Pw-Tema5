@@ -1,0 +1,2493 @@
+{
+  "fechaReferencia": "2026-10-09T10:00:00-05:00",
+  "prioridades": [
+    {
+      "codigo": "critica",
+      "nombre": "Crítica",
+      "orden": 1,
+      "color": "#B4322B",
+      "horas": 2
+    },
+    {
+      "codigo": "alta",
+      "nombre": "Alta",
+      "orden": 2,
+      "color": "#D2601A",
+      "horas": 8
+    },
+    {
+      "codigo": "media",
+      "nombre": "Media",
+      "orden": 3,
+      "color": "#B7791F",
+      "horas": 24
+    },
+    {
+      "codigo": "baja",
+      "nombre": "Baja",
+      "orden": 4,
+      "color": "#3B6FA8",
+      "horas": 72
+    }
+  ],
+  "estadosTicket": [
+    {
+      "codigo": "abierto",
+      "nombre": "Abierto",
+      "color": "#3B6FA8",
+      "esFinal": false
+    },
+    {
+      "codigo": "en_atencion",
+      "nombre": "En atención",
+      "color": "#B7791F",
+      "esFinal": false
+    },
+    {
+      "codigo": "en_espera",
+      "nombre": "En espera",
+      "color": "#5F6C78",
+      "esFinal": false
+    },
+    {
+      "codigo": "resuelto",
+      "nombre": "Resuelto",
+      "color": "#1E7F4D",
+      "esFinal": false
+    },
+    {
+      "codigo": "cerrado",
+      "nombre": "Cerrado",
+      "color": "#1E7F4D",
+      "esFinal": true
+    },
+    {
+      "codigo": "reabierto",
+      "nombre": "Reabierto",
+      "color": "#B4322B",
+      "esFinal": false
+    },
+    {
+      "codigo": "cancelado",
+      "nombre": "Cancelado",
+      "color": "#5F6C78",
+      "esFinal": true
+    }
+  ],
+  "unidades": [
+    "Administración",
+    "Arquitectura",
+    "Biblioteca",
+    "Comunicaciones",
+    "Contabilidad",
+    "Derecho",
+    "Economía",
+    "Infraestructura y Servicios",
+    "Ingeniería Civil",
+    "Ingeniería Industrial",
+    "Ingeniería de Sistemas",
+    "Marketing",
+    "Psicología"
+  ],
+  "sedes": [
+    {
+      "id": 1,
+      "nombre": "Campus Monterrico",
+      "direccion": "Av. Javier Prado Este 4600, Santiago de Surco",
+      "activa": true
+    },
+    {
+      "id": 2,
+      "nombre": "Sede San Isidro",
+      "direccion": "Calle Las Begonias 415, San Isidro",
+      "activa": true
+    }
+  ],
+  "ambientes": [
+    {
+      "id": 1,
+      "codigo": "A-201",
+      "nombre": "Aula 201",
+      "tipo": "aula",
+      "pabellon": "A",
+      "piso": 2,
+      "sedeId": 1,
+      "capacidad": 68,
+      "activo": true
+    },
+    {
+      "id": 2,
+      "codigo": "A-305",
+      "nombre": "Aula 305",
+      "tipo": "aula",
+      "pabellon": "A",
+      "piso": 3,
+      "sedeId": 1,
+      "capacidad": 54,
+      "activo": true
+    },
+    {
+      "id": 3,
+      "codigo": "E-304",
+      "nombre": "Aula magna E-304",
+      "tipo": "aula_magna",
+      "pabellon": "E",
+      "piso": 3,
+      "sedeId": 1,
+      "capacidad": 120,
+      "activo": true
+    },
+    {
+      "id": 4,
+      "codigo": "H-105",
+      "nombre": "Laboratorio de cómputo",
+      "tipo": "laboratorio",
+      "pabellon": "H",
+      "piso": 1,
+      "sedeId": 1,
+      "capacidad": 32,
+      "activo": true
+    },
+    {
+      "id": 5,
+      "codigo": "H-210",
+      "nombre": "Laboratorio de Redes",
+      "tipo": "laboratorio",
+      "pabellon": "H",
+      "piso": 2,
+      "sedeId": 1,
+      "capacidad": 28,
+      "activo": true
+    },
+    {
+      "id": 6,
+      "codigo": "N-402",
+      "nombre": "Aula 402",
+      "tipo": "aula",
+      "pabellon": "N",
+      "piso": 4,
+      "sedeId": 1,
+      "capacidad": 48,
+      "activo": true
+    },
+    {
+      "id": 7,
+      "codigo": "Q-101",
+      "nombre": "Auditorio Q-101",
+      "tipo": "auditorio",
+      "pabellon": "Q",
+      "piso": 1,
+      "sedeId": 1,
+      "capacidad": 180,
+      "activo": true
+    },
+    {
+      "id": 8,
+      "codigo": "BIB-P2",
+      "nombre": "Biblioteca piso 2",
+      "tipo": "biblioteca",
+      "pabellon": "Biblioteca",
+      "piso": 2,
+      "sedeId": 1,
+      "capacidad": 210,
+      "activo": true
+    },
+    {
+      "id": 9,
+      "codigo": "AUD-CEN",
+      "nombre": "Auditorio Central",
+      "tipo": "auditorio",
+      "pabellon": "Central",
+      "piso": 1,
+      "sedeId": 1,
+      "capacidad": 420,
+      "activo": true
+    },
+    {
+      "id": 10,
+      "codigo": "L-108",
+      "nombre": "Laboratorio de Física",
+      "tipo": "laboratorio",
+      "pabellon": "L",
+      "piso": 1,
+      "sedeId": 1,
+      "capacidad": 30,
+      "activo": true
+    },
+    {
+      "id": 11,
+      "codigo": "SI-101",
+      "nombre": "Aula 101 San Isidro",
+      "tipo": "aula",
+      "pabellon": "Único",
+      "piso": 1,
+      "sedeId": 2,
+      "capacidad": 40,
+      "activo": true
+    },
+    {
+      "id": 12,
+      "codigo": "SI-LAB",
+      "nombre": "Laboratorio San Isidro",
+      "tipo": "laboratorio",
+      "pabellon": "Único",
+      "piso": 2,
+      "sedeId": 2,
+      "capacidad": 24,
+      "activo": true
+    }
+  ],
+  "categorias": [
+    {
+      "id": 1,
+      "nombre": "Audiovisuales",
+      "parentId": null,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Proyectores, ecran, audio y micrófonos de aulas y auditorios.",
+      "activa": true
+    },
+    {
+      "id": 2,
+      "nombre": "Climatización",
+      "parentId": null,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Aire acondicionado, ventilación y fugas de condensado.",
+      "activa": true
+    },
+    {
+      "id": 3,
+      "nombre": "Redes y conectividad",
+      "parentId": null,
+      "prioridadDefecto": "critica",
+      "tiempoEsperadoHoras": 2,
+      "descripcion": "Puntos de red, wifi y enlaces de laboratorios.",
+      "activa": true
+    },
+    {
+      "id": 4,
+      "nombre": "Mobiliario",
+      "parentId": null,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Sillas, mesas, pizarras y cortinas dañadas.",
+      "activa": true
+    },
+    {
+      "id": 5,
+      "nombre": "Eléctrico",
+      "parentId": null,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Tomacorrientes, luminarias y extensiones.",
+      "activa": true
+    },
+    {
+      "id": 6,
+      "nombre": "Limpieza",
+      "parentId": null,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "Fugas de agua, derrames y limpieza tras eventos.",
+      "activa": true
+    },
+    {
+      "id": 7,
+      "nombre": "Accesos y cerraduras",
+      "parentId": null,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Chapas, puertas y accesos de ambientes.",
+      "activa": true
+    },
+    {
+      "id": 8,
+      "nombre": "Jardinería",
+      "parentId": null,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Áreas verdes del campus. Fuera de servicio temporalmente.",
+      "activa": false
+    },
+    {
+      "id": 9,
+      "nombre": "Proyector no enciende",
+      "parentId": 1,
+      "prioridadDefecto": "critica",
+      "tiempoEsperadoHoras": 2,
+      "descripcion": "El equipo no prende o la imagen no llega a la pantalla.",
+      "activa": true
+    },
+    {
+      "id": 10,
+      "nombre": "Imagen distorsionada",
+      "parentId": 1,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "Colores alterados, imagen borrosa o parpadeante.",
+      "activa": true
+    },
+    {
+      "id": 11,
+      "nombre": "Audio sin señal",
+      "parentId": 1,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "Parlantes del ambiente sin sonido.",
+      "activa": true
+    },
+    {
+      "id": 12,
+      "nombre": "Ecran atascado",
+      "parentId": 1,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "El ecran no baja o no sube.",
+      "activa": true
+    },
+    {
+      "id": 13,
+      "nombre": "Micrófono inalámbrico sin señal",
+      "parentId": 1,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "Micrófonos de auditorio sin enlace.",
+      "activa": true
+    },
+    {
+      "id": 14,
+      "nombre": "Aire sin frío",
+      "parentId": 2,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "El equipo enciende pero no enfría.",
+      "activa": true
+    },
+    {
+      "id": 15,
+      "nombre": "Fuga de condensado",
+      "parentId": 2,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Goteo de agua desde el equipo de aire.",
+      "activa": true
+    },
+    {
+      "id": 16,
+      "nombre": "Punto de red caído",
+      "parentId": 3,
+      "prioridadDefecto": "critica",
+      "tiempoEsperadoHoras": 2,
+      "descripcion": "Sin enlace en el punto de red de la mesa o del rack.",
+      "activa": true
+    },
+    {
+      "id": 17,
+      "nombre": "Señal intermitente",
+      "parentId": 3,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "El wifi se corta o es muy lento.",
+      "activa": true
+    },
+    {
+      "id": 18,
+      "nombre": "Silla rota",
+      "parentId": 4,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Sillas con respaldar, asiento o patas dañadas.",
+      "activa": true
+    },
+    {
+      "id": 19,
+      "nombre": "Mesa dañada",
+      "parentId": 4,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Mesas desniveladas o rotas.",
+      "activa": true
+    },
+    {
+      "id": 20,
+      "nombre": "Cortina trabada",
+      "parentId": 4,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Cortinas o persianas que no corren.",
+      "activa": true
+    },
+    {
+      "id": 21,
+      "nombre": "Tomacorriente sin energía",
+      "parentId": 5,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Tomacorrientes sin energía o con chispas.",
+      "activa": true
+    },
+    {
+      "id": 22,
+      "nombre": "Luminaria defectuosa",
+      "parentId": 5,
+      "prioridadDefecto": "baja",
+      "tiempoEsperadoHoras": 72,
+      "descripcion": "Fluorescentes o paneles que parpadean o no encienden.",
+      "activa": true
+    },
+    {
+      "id": 23,
+      "nombre": "Extensión en mal estado",
+      "parentId": 5,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "Extensiones o regletas con cables expuestos.",
+      "activa": true
+    },
+    {
+      "id": 24,
+      "nombre": "Fuga de agua",
+      "parentId": 6,
+      "prioridadDefecto": "critica",
+      "tiempoEsperadoHoras": 2,
+      "descripcion": "Fugas en baños, techos o tuberías.",
+      "activa": true
+    },
+    {
+      "id": 25,
+      "nombre": "Residuos tras evento",
+      "parentId": 6,
+      "prioridadDefecto": "media",
+      "tiempoEsperadoHoras": 24,
+      "descripcion": "Limpieza profunda después de eventos.",
+      "activa": true
+    },
+    {
+      "id": 26,
+      "nombre": "Chapa trabada",
+      "parentId": 7,
+      "prioridadDefecto": "alta",
+      "tiempoEsperadoHoras": 8,
+      "descripcion": "La chapa no abre o no cierra.",
+      "activa": true
+    },
+    {
+      "id": 27,
+      "nombre": "Puerta de emergencia no cierra",
+      "parentId": 7,
+      "prioridadDefecto": "critica",
+      "tiempoEsperadoHoras": 2,
+      "descripcion": "Puertas de emergencia que no cierran o no abren.",
+      "activa": true
+    }
+  ],
+  "tecnicoCategorias": [
+    {
+      "tecnicoId": 10,
+      "categoriaId": 1
+    },
+    {
+      "tecnicoId": 10,
+      "categoriaId": 3
+    },
+    {
+      "tecnicoId": 11,
+      "categoriaId": 4
+    },
+    {
+      "tecnicoId": 11,
+      "categoriaId": 1
+    },
+    {
+      "tecnicoId": 12,
+      "categoriaId": 5
+    },
+    {
+      "tecnicoId": 12,
+      "categoriaId": 7
+    },
+    {
+      "tecnicoId": 13,
+      "categoriaId": 3
+    },
+    {
+      "tecnicoId": 13,
+      "categoriaId": 2
+    },
+    {
+      "tecnicoId": 14,
+      "categoriaId": 6
+    },
+    {
+      "tecnicoId": 15,
+      "categoriaId": 2
+    },
+    {
+      "tecnicoId": 15,
+      "categoriaId": 4
+    }
+  ],
+  "usuarios": [
+    {
+      "id": 1,
+      "nombres": "Camila Alejandra",
+      "apellidos": "Quispe Ramos",
+      "email": "camila.quispe@aloe.ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "987 654 321",
+      "unidad": "Ingeniería de Sistemas",
+      "vinculo": "alumno",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 1,
+      "creadoEn": "2026-03-14T09:10:00-05:00",
+      "ultimoAcceso": "2026-10-09T07:30:00-05:00"
+    },
+    {
+      "id": 2,
+      "nombres": "Renzo",
+      "apellidos": "Salazar Núñez",
+      "email": "renzo.salazar@aloe.ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "986 112 450",
+      "unidad": "Ingeniería Industrial",
+      "vinculo": "alumno",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 5,
+      "creadoEn": "2026-03-20T11:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T07:00:00-05:00"
+    },
+    {
+      "id": 3,
+      "nombres": "Milagros",
+      "apellidos": "Ccahuana Ríos",
+      "email": "mccahuana@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "945 778 120",
+      "unidad": "Comunicaciones",
+      "vinculo": "docente",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 3,
+      "creadoEn": "2026-02-02T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T06:30:00-05:00"
+    },
+    {
+      "id": 4,
+      "nombres": "Diego",
+      "apellidos": "Aliaga Ferrer",
+      "email": "diego.aliaga@aloe.ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "912 334 008",
+      "unidad": "Derecho",
+      "vinculo": "alumno",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 6,
+      "creadoEn": "2026-04-11T16:30:00-05:00",
+      "ultimoAcceso": "2026-10-09T06:00:00-05:00"
+    },
+    {
+      "id": 5,
+      "nombres": "Andrea",
+      "apellidos": "Chávez Loayza",
+      "email": "achavez@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "934 556 781",
+      "unidad": "Arquitectura",
+      "vinculo": "docente",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 7,
+      "creadoEn": "2026-01-15T10:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T05:30:00-05:00"
+    },
+    {
+      "id": 6,
+      "nombres": "Pedro",
+      "apellidos": "Salcedo Ayala",
+      "email": "psalcedo@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "955 210 334",
+      "unidad": "Administración",
+      "vinculo": "administrativo",
+      "rol": "usuario",
+      "estado": "bloqueado",
+      "motivoBloqueo": "Reportes falsos reiterados en el pabellón H.",
+      "especialidades": [],
+      "ambienteHabitualId": 4,
+      "creadoEn": "2026-02-20T09:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T05:00:00-05:00"
+    },
+    {
+      "id": 7,
+      "nombres": "Rosa",
+      "apellidos": "Ticona Álvarez",
+      "email": "rosa.ticona@aloe.ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "977 001 245",
+      "unidad": "Psicología",
+      "vinculo": "alumno",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 1,
+      "creadoEn": "2026-05-03T12:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T04:30:00-05:00"
+    },
+    {
+      "id": 8,
+      "nombres": "Karina",
+      "apellidos": "Bustamante Ruiz",
+      "email": "kbustamante@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "966 443 120",
+      "unidad": "Biblioteca",
+      "vinculo": "administrativo",
+      "rol": "usuario",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 8,
+      "creadoEn": "2026-01-08T08:30:00-05:00",
+      "ultimoAcceso": "2026-10-09T04:00:00-05:00"
+    },
+    {
+      "id": 9,
+      "nombres": "César",
+      "apellidos": "Rojas Bermúdez",
+      "email": "cesar.rojas@aloe.ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "923 887 650",
+      "unidad": "Ingeniería de Sistemas",
+      "vinculo": "alumno",
+      "rol": "usuario",
+      "estado": "inactivo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": 6,
+      "creadoEn": "2026-03-01T14:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T03:30:00-05:00"
+    },
+    {
+      "id": 10,
+      "nombres": "Julio César",
+      "apellidos": "Paredes Soto",
+      "email": "jparedes@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 220 874",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        1,
+        3
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2025-08-01T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T03:00:00-05:00"
+    },
+    {
+      "id": 11,
+      "nombres": "Marco",
+      "apellidos": "Huamán Vela",
+      "email": "mhuaman@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 330 121",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        4,
+        1
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2025-08-01T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T02:30:00-05:00"
+    },
+    {
+      "id": 12,
+      "nombres": "Iván",
+      "apellidos": "Zegarra Pinto",
+      "email": "izegarra@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 440 765",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        5,
+        7
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2025-09-10T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T02:00:00-05:00"
+    },
+    {
+      "id": 13,
+      "nombres": "Sandra",
+      "apellidos": "Nolasco Ríos",
+      "email": "snolasco@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 550 902",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        3,
+        2
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2025-10-05T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T01:30:00-05:00"
+    },
+    {
+      "id": 14,
+      "nombres": "Rocío",
+      "apellidos": "Espinoza Farfán",
+      "email": "respinoza@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 660 318",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        6
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2026-01-12T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T01:00:00-05:00"
+    },
+    {
+      "id": 15,
+      "nombres": "Hernán",
+      "apellidos": "Loayza Pomar",
+      "email": "hloayza@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 770 455",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "tecnico",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [
+        2
+      ],
+      "ambienteHabitualId": null,
+      "creadoEn": "2026-02-01T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T00:30:00-05:00"
+    },
+    {
+      "id": 16,
+      "nombres": "Lucía",
+      "apellidos": "Mendoza Ríos",
+      "email": "lmendoza@ulima.edu.pe",
+      "password": "Ulima2026",
+      "telefono": "951 100 200",
+      "unidad": "Infraestructura y Servicios",
+      "vinculo": "administrativo",
+      "rol": "supervisor",
+      "estado": "activo",
+      "motivoBloqueo": null,
+      "especialidades": [],
+      "ambienteHabitualId": null,
+      "creadoEn": "2025-06-01T08:00:00-05:00",
+      "ultimoAcceso": "2026-10-09T00:00:00-05:00"
+    }
+  ],
+  "invitaciones": [
+    {
+      "id": 1,
+      "token": "inv-tec-7f3a9c",
+      "nombres": "Hugo",
+      "apellidos": "Ramírez Torres",
+      "email": "hramirez@ulima.edu.pe",
+      "rol": "tecnico",
+      "telefono": "951 880 112",
+      "invitadoPorId": 16,
+      "creadoEn": "2026-10-08T10:00:00-05:00",
+      "venceEn": "2026-10-12T10:00:00-05:00",
+      "estado": "pendiente"
+    },
+    {
+      "id": 2,
+      "token": "inv-sup-2b81d4",
+      "nombres": "Paola",
+      "apellidos": "Vargas Lindo",
+      "email": "pvargas@ulima.edu.pe",
+      "rol": "supervisor",
+      "telefono": "951 990 334",
+      "invitadoPorId": 16,
+      "creadoEn": "2026-10-09T00:00:00-05:00",
+      "venceEn": "2026-10-14T10:00:00-05:00",
+      "estado": "pendiente"
+    },
+    {
+      "id": 3,
+      "token": "inv-tec-vencida",
+      "nombres": "Tomás",
+      "apellidos": "Quiroz León",
+      "email": "tquiroz@ulima.edu.pe",
+      "rol": "tecnico",
+      "telefono": "951 000 777",
+      "invitadoPorId": 16,
+      "creadoEn": "2026-09-27T10:00:00-05:00",
+      "venceEn": "2026-10-04T10:00:00-05:00",
+      "estado": "pendiente"
+    }
+  ],
+  "recuperaciones": [],
+  "tickets": [
+    {
+      "id": 1,
+      "codigo": "TCK-2026-00147",
+      "asunto": "Proyector no enciende en aula A-201",
+      "descripcion": "El proyector enciende el foco pero la imagen no llega a la pantalla. Probé con dos laptops y el mismo cable HDMI de la mesa. Hay clase de 10:00 a 13:00.",
+      "categoriaId": 1,
+      "subcategoriaId": 9,
+      "ambienteId": 1,
+      "solicitanteId": 7,
+      "tecnicoId": null,
+      "prioridad": "critica",
+      "prioridadSugerida": "critica",
+      "estado": "abierto",
+      "creadoEn": "2026-10-09T09:42:00-05:00",
+      "venceEn": "2026-10-09T11:42:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 2,
+      "codigo": "TCK-2026-00146",
+      "asunto": "Punto de red caído en laboratorio",
+      "descripcion": "Las mesas 4 a 9 del laboratorio no tienen red desde la mañana. Las computadoras muestran 'cable desconectado'.",
+      "categoriaId": 3,
+      "subcategoriaId": 16,
+      "ambienteId": 5,
+      "solicitanteId": 2,
+      "tecnicoId": null,
+      "prioridad": "critica",
+      "prioridadSugerida": "critica",
+      "estado": "abierto",
+      "creadoEn": "2026-10-09T09:18:00-05:00",
+      "venceEn": "2026-10-09T11:18:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 3,
+      "codigo": "TCK-2026-00145",
+      "asunto": "Aire acondicionado sin frío",
+      "descripcion": "El aire del aula magna enciende pero solo bota aire caliente. Hay examen a las 11:00.",
+      "categoriaId": 2,
+      "subcategoriaId": 14,
+      "ambienteId": 3,
+      "solicitanteId": 1,
+      "tecnicoId": 15,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T08:48:00-05:00",
+      "venceEn": "2026-10-09T16:48:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 4,
+      "codigo": "TCK-2026-00144",
+      "asunto": "Tomacorriente sin energía",
+      "descripcion": "Los tomacorrientes de la pared izquierda no tienen energía; los alumnos no pueden cargar sus laptops.",
+      "categoriaId": 5,
+      "subcategoriaId": 21,
+      "ambienteId": 6,
+      "solicitanteId": 4,
+      "tecnicoId": null,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "abierto",
+      "creadoEn": "2026-10-09T08:24:00-05:00",
+      "venceEn": "2026-10-09T16:24:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 5,
+      "codigo": "TCK-2026-00143",
+      "asunto": "Imagen distorsionada del proyector",
+      "descripcion": "La imagen se ve con franjas verdes desde ayer.",
+      "categoriaId": 1,
+      "subcategoriaId": 10,
+      "ambienteId": 7,
+      "solicitanteId": 5,
+      "tecnicoId": 11,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T07:54:00-05:00",
+      "venceEn": "2026-10-10T07:54:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 6,
+      "codigo": "TCK-2026-00142",
+      "asunto": "Chapa de puerta trabada",
+      "descripcion": "La chapa del laboratorio no abre con la llave maestra.",
+      "categoriaId": 7,
+      "subcategoriaId": 26,
+      "ambienteId": 4,
+      "solicitanteId": 6,
+      "tecnicoId": 12,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T07:18:00-05:00",
+      "venceEn": "2026-10-09T15:18:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 7,
+      "codigo": "TCK-2026-00141",
+      "asunto": "Cinco sillas rotas en aula",
+      "descripcion": "Hay cinco sillas con el respaldar roto al fondo del aula.",
+      "categoriaId": 4,
+      "subcategoriaId": 18,
+      "ambienteId": 1,
+      "solicitanteId": 7,
+      "tecnicoId": 11,
+      "prioridad": "media",
+      "prioridadSugerida": "baja",
+      "estado": "en_espera",
+      "creadoEn": "2026-10-09T06:42:00-05:00",
+      "venceEn": "2026-10-10T06:42:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": "Sillas de reemplazo solicitadas al almacén.",
+      "fechaRetorno": "2026-10-11T10:00:00-05:00",
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 8,
+      "codigo": "TCK-2026-00140",
+      "asunto": "Fuga de agua en baño de damas",
+      "descripcion": "Hay agua saliendo debajo del lavatorio del baño de damas del piso 2 de la biblioteca.",
+      "categoriaId": 6,
+      "subcategoriaId": 24,
+      "ambienteId": 8,
+      "solicitanteId": 8,
+      "tecnicoId": 14,
+      "prioridad": "critica",
+      "prioridadSugerida": "critica",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T06:06:00-05:00",
+      "venceEn": "2026-10-09T08:06:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 9,
+      "codigo": "TCK-2026-00139",
+      "asunto": "Wifi intermitente en pasillo",
+      "descripcion": "La red ULIMA se corta cada pocos minutos en el pasillo y el aula magna.",
+      "categoriaId": 3,
+      "subcategoriaId": 17,
+      "ambienteId": 3,
+      "solicitanteId": 1,
+      "tecnicoId": null,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "abierto",
+      "creadoEn": "2026-10-09T05:42:00-05:00",
+      "venceEn": "2026-10-10T05:42:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 10,
+      "codigo": "TCK-2026-00138",
+      "asunto": "Ecran no baja",
+      "descripcion": "El ecran del auditorio se quedó trabado a medio camino.",
+      "categoriaId": 1,
+      "subcategoriaId": 12,
+      "ambienteId": 7,
+      "solicitanteId": 3,
+      "tecnicoId": null,
+      "prioridad": "baja",
+      "prioridadSugerida": "baja",
+      "estado": "abierto",
+      "creadoEn": "2026-10-09T04:54:00-05:00",
+      "venceEn": "2026-10-12T04:54:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 11,
+      "codigo": "TCK-2026-00137",
+      "asunto": "Luminaria parpadea",
+      "descripcion": "Dos fluorescentes del aula parpadean todo el tiempo.",
+      "categoriaId": 5,
+      "subcategoriaId": 22,
+      "ambienteId": 6,
+      "solicitanteId": 4,
+      "tecnicoId": 12,
+      "prioridad": "baja",
+      "prioridadSugerida": "baja",
+      "estado": "en_espera",
+      "creadoEn": "2026-10-09T03:30:00-05:00",
+      "venceEn": "2026-10-12T03:30:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": "Proveedor debe entregar los paneles LED.",
+      "fechaRetorno": "2026-10-12T10:00:00-05:00",
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 12,
+      "codigo": "TCK-2026-00136",
+      "asunto": "Aire acondicionado gotea",
+      "descripcion": "El equipo de aire del laboratorio gotea sobre una de las mesas.",
+      "categoriaId": 2,
+      "subcategoriaId": 15,
+      "ambienteId": 5,
+      "solicitanteId": 5,
+      "tecnicoId": 13,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T00:48:00-05:00",
+      "venceEn": "2026-10-09T08:48:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 13,
+      "codigo": "TCK-2026-00135",
+      "asunto": "Mesa desnivelada",
+      "descripcion": "La mesa del docente está coja y se mueve al escribir.",
+      "categoriaId": 4,
+      "subcategoriaId": 19,
+      "ambienteId": 1,
+      "solicitanteId": 7,
+      "tecnicoId": 11,
+      "prioridad": "baja",
+      "prioridadSugerida": "baja",
+      "estado": "resuelto",
+      "creadoEn": "2026-10-08T23:12:00-05:00",
+      "venceEn": "2026-10-11T23:12:00-05:00",
+      "resueltoEn": "2026-10-09T09:00:00-05:00",
+      "cerradoEn": null,
+      "solucion": "Se niveló la pata con un regatón nuevo.",
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 14,
+      "codigo": "TCK-2026-00134",
+      "asunto": "Micrófono inalámbrico sin señal",
+      "descripcion": "Los dos micrófonos inalámbricos del Auditorio Central no tienen señal.",
+      "categoriaId": 1,
+      "subcategoriaId": 13,
+      "ambienteId": 9,
+      "solicitanteId": 8,
+      "tecnicoId": 10,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "resuelto",
+      "creadoEn": "2026-10-08T14:00:00-05:00",
+      "venceEn": "2026-10-09T14:00:00-05:00",
+      "resueltoEn": "2026-10-09T06:00:00-05:00",
+      "cerradoEn": null,
+      "solucion": "Se cambiaron las pilas y se re-sincronizó el receptor.",
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 15,
+      "codigo": "TCK-2026-00133",
+      "asunto": "Proyector con imagen verdosa",
+      "descripcion": "El proyector del auditorio Q muestra todo en tono verde.",
+      "categoriaId": 1,
+      "subcategoriaId": 10,
+      "ambienteId": 7,
+      "solicitanteId": 2,
+      "tecnicoId": 10,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "en_espera",
+      "creadoEn": "2026-10-08T04:00:00-05:00",
+      "venceEn": "2026-10-09T04:00:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": "Espera de lámpara de repuesto del proveedor.",
+      "fechaRetorno": "2026-10-10T10:00:00-05:00",
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 16,
+      "codigo": "TCK-2026-00132",
+      "asunto": "Punto de red sin enlace",
+      "descripcion": "El punto de red de la mesa del docente no tiene enlace.",
+      "categoriaId": 3,
+      "subcategoriaId": 16,
+      "ambienteId": 4,
+      "solicitanteId": 3,
+      "tecnicoId": 10,
+      "prioridad": "alta",
+      "prioridadSugerida": "critica",
+      "estado": "en_atencion",
+      "creadoEn": "2026-10-09T08:30:00-05:00",
+      "venceEn": "2026-10-09T16:30:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 17,
+      "codigo": "TCK-2026-00131",
+      "asunto": "Piso con residuos tras evento",
+      "descripcion": "Después de la ceremonia quedaron residuos y manchas en el piso del auditorio.",
+      "categoriaId": 6,
+      "subcategoriaId": 25,
+      "ambienteId": 9,
+      "solicitanteId": 1,
+      "tecnicoId": 14,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "cerrado",
+      "creadoEn": "2026-10-03T10:00:00-05:00",
+      "venceEn": "2026-10-04T10:00:00-05:00",
+      "resueltoEn": "2026-10-03T19:36:00-05:00",
+      "cerradoEn": "2026-10-03T22:00:00-05:00",
+      "solucion": "Limpieza profunda del ambiente y retiro de residuos del evento.",
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 18,
+      "codigo": "TCK-2026-00130",
+      "asunto": "Extensión eléctrica en mal estado",
+      "descripcion": "La extensión del escritorio tiene el cable pelado cerca del enchufe.",
+      "categoriaId": 5,
+      "subcategoriaId": 23,
+      "ambienteId": 3,
+      "solicitanteId": 1,
+      "tecnicoId": 12,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "cerrado",
+      "creadoEn": "2026-09-30T04:00:00-05:00",
+      "venceEn": "2026-09-30T12:00:00-05:00",
+      "resueltoEn": "2026-10-01T05:26:24-05:00",
+      "cerradoEn": "2026-10-01T10:12:00-05:00",
+      "solucion": "Se reemplazó la extensión y se fijó la canaleta del escritorio.",
+      "motivoEspera": "Repuesto de canaleta",
+      "fechaRetorno": "2026-10-01T05:00:00-05:00",
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 19,
+      "codigo": "TCK-2026-00129",
+      "asunto": "Silla rota en aula 305",
+      "descripcion": "La silla del docente tiene una pata suelta.",
+      "categoriaId": 4,
+      "subcategoriaId": 18,
+      "ambienteId": 2,
+      "solicitanteId": 1,
+      "tecnicoId": null,
+      "prioridad": "baja",
+      "prioridadSugerida": "baja",
+      "estado": "cancelado",
+      "creadoEn": "2026-09-27T10:00:00-05:00",
+      "venceEn": "2026-09-30T10:00:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": "Ya la cambiaron los de limpieza.",
+      "motivoReapertura": null
+    },
+    {
+      "id": 20,
+      "codigo": "TCK-2026-00128",
+      "asunto": "Puerta de emergencia no cierra",
+      "descripcion": "La puerta de emergencia del laboratorio se queda abierta.",
+      "categoriaId": 7,
+      "subcategoriaId": 27,
+      "ambienteId": 5,
+      "solicitanteId": 6,
+      "tecnicoId": 10,
+      "prioridad": "critica",
+      "prioridadSugerida": "critica",
+      "estado": "cerrado",
+      "creadoEn": "2026-10-04T07:00:00-05:00",
+      "venceEn": "2026-10-04T09:00:00-05:00",
+      "resueltoEn": "2026-10-04T10:00:00-05:00",
+      "cerradoEn": "2026-10-04T12:24:00-05:00",
+      "solucion": "Se ajustó el brazo hidráulico y se cambió el pestillo.",
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 21,
+      "codigo": "TCK-2026-00127",
+      "asunto": "Aire acondicionado sin frío en aula magna",
+      "descripcion": "El aire volvió a fallar: enciende pero no enfría.",
+      "categoriaId": 2,
+      "subcategoriaId": 14,
+      "ambienteId": 3,
+      "solicitanteId": 1,
+      "tecnicoId": 15,
+      "prioridad": "alta",
+      "prioridadSugerida": "alta",
+      "estado": "reabierto",
+      "creadoEn": "2026-10-06T10:00:00-05:00",
+      "venceEn": "2026-10-09T14:00:00-05:00",
+      "resueltoEn": "2026-10-06T22:00:00-05:00",
+      "cerradoEn": "2026-10-07T00:24:00-05:00",
+      "solucion": "Se recargó el gas refrigerante.",
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": "Volvió a fallar al día siguiente: solo bota aire caliente."
+    },
+    {
+      "id": 22,
+      "codigo": "TCK-2026-00126",
+      "asunto": "Cortina del auditorio trabada",
+      "descripcion": "La cortina principal del Auditorio Central no corre.",
+      "categoriaId": 4,
+      "subcategoriaId": 20,
+      "ambienteId": 9,
+      "solicitanteId": 7,
+      "tecnicoId": 11,
+      "prioridad": "baja",
+      "prioridadSugerida": "baja",
+      "estado": "en_espera",
+      "creadoEn": "2026-10-07T10:00:00-05:00",
+      "venceEn": "2026-10-10T10:00:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": "Espera de visita del proveedor de cortinas.",
+      "fechaRetorno": "2026-10-11T10:00:00-05:00",
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    },
+    {
+      "id": 23,
+      "codigo": "TCK-2026-00125",
+      "asunto": "Señal intermitente en laboratorio de Física",
+      "descripcion": "El wifi del laboratorio se cae cada vez que hay más de 20 alumnos.",
+      "categoriaId": 3,
+      "subcategoriaId": 17,
+      "ambienteId": 10,
+      "solicitanteId": 2,
+      "tecnicoId": null,
+      "prioridad": "media",
+      "prioridadSugerida": "media",
+      "estado": "abierto",
+      "creadoEn": "2026-10-08T08:00:00-05:00",
+      "venceEn": "2026-10-09T08:00:00-05:00",
+      "resueltoEn": null,
+      "cerradoEn": null,
+      "solucion": null,
+      "motivoEspera": null,
+      "fechaRetorno": null,
+      "motivoCancelacion": null,
+      "motivoReapertura": null
+    }
+  ],
+  "asignaciones": [
+    {
+      "id": 1,
+      "ticketId": 3,
+      "tecnicoId": 15,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T08:57:00-05:00"
+    },
+    {
+      "id": 2,
+      "ticketId": 5,
+      "tecnicoId": 11,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T08:03:00-05:00"
+    },
+    {
+      "id": 3,
+      "ticketId": 6,
+      "tecnicoId": 12,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T07:27:00-05:00"
+    },
+    {
+      "id": 4,
+      "ticketId": 7,
+      "tecnicoId": 11,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T06:51:00-05:00"
+    },
+    {
+      "id": 5,
+      "ticketId": 8,
+      "tecnicoId": 14,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T06:15:00-05:00"
+    },
+    {
+      "id": 6,
+      "ticketId": 11,
+      "tecnicoId": 12,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T03:39:00-05:00"
+    },
+    {
+      "id": 7,
+      "ticketId": 12,
+      "tecnicoId": 13,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T00:57:00-05:00"
+    },
+    {
+      "id": 8,
+      "ticketId": 13,
+      "tecnicoId": 11,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-08T23:21:00-05:00"
+    },
+    {
+      "id": 9,
+      "ticketId": 14,
+      "tecnicoId": 10,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-08T14:09:00-05:00"
+    },
+    {
+      "id": 10,
+      "ticketId": 15,
+      "tecnicoId": 10,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-08T04:09:00-05:00"
+    },
+    {
+      "id": 11,
+      "ticketId": 16,
+      "tecnicoId": 10,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-09T08:39:00-05:00"
+    },
+    {
+      "id": 12,
+      "ticketId": 17,
+      "tecnicoId": 14,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-03T10:09:00-05:00"
+    },
+    {
+      "id": 13,
+      "ticketId": 18,
+      "tecnicoId": 12,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Revisar antes de la clase de la tarde.",
+      "creadoEn": "2026-09-30T04:46:12-05:00"
+    },
+    {
+      "id": 14,
+      "ticketId": 20,
+      "tecnicoId": 10,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-04T07:09:00-05:00"
+    },
+    {
+      "id": 15,
+      "ticketId": 21,
+      "tecnicoId": 15,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-06T10:09:00-05:00"
+    },
+    {
+      "id": 16,
+      "ticketId": 22,
+      "tecnicoId": 11,
+      "asignadoPorId": 16,
+      "tipo": "asignacion",
+      "motivo": null,
+      "nota": "Atender según prioridad.",
+      "creadoEn": "2026-10-07T10:09:00-05:00"
+    }
+  ],
+  "cambiosPrioridad": [
+    {
+      "id": 1,
+      "ticketId": 7,
+      "anterior": "baja",
+      "nueva": "media",
+      "motivo": "Ajuste según el impacto en clases.",
+      "autorId": 16,
+      "creadoEn": "2026-10-09T07:01:48-05:00"
+    },
+    {
+      "id": 2,
+      "ticketId": 16,
+      "anterior": "critica",
+      "nueva": "alta",
+      "motivo": "Ajuste según el impacto en clases.",
+      "autorId": 16,
+      "creadoEn": "2026-10-09T08:39:00-05:00"
+    }
+  ],
+  "bitacora": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "autorId": 7,
+      "tipo": "publico",
+      "texto": "Dato adicional: la clase empieza a las 10:00, por favor priorizar.",
+      "creadoEn": "2026-10-09T09:51:00-05:00"
+    },
+    {
+      "id": 2,
+      "ticketId": 3,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Hernán Loayza. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T08:57:00-05:00"
+    },
+    {
+      "id": 3,
+      "ticketId": 3,
+      "autorId": 15,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T09:18:00-05:00"
+    },
+    {
+      "id": 4,
+      "ticketId": 3,
+      "autorId": 15,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T09:21:00-05:00"
+    },
+    {
+      "id": 5,
+      "ticketId": 5,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Marco Huamán. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T08:03:00-05:00"
+    },
+    {
+      "id": 6,
+      "ticketId": 5,
+      "autorId": 11,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T08:24:00-05:00"
+    },
+    {
+      "id": 7,
+      "ticketId": 5,
+      "autorId": 11,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T08:27:00-05:00"
+    },
+    {
+      "id": 8,
+      "ticketId": 6,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Iván Zegarra. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T07:27:00-05:00"
+    },
+    {
+      "id": 9,
+      "ticketId": 6,
+      "autorId": 12,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T07:48:00-05:00"
+    },
+    {
+      "id": 10,
+      "ticketId": 6,
+      "autorId": 12,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T07:51:00-05:00"
+    },
+    {
+      "id": 11,
+      "ticketId": 7,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Marco Huamán. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T06:51:00-05:00"
+    },
+    {
+      "id": 12,
+      "ticketId": 7,
+      "autorId": 11,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T07:12:00-05:00"
+    },
+    {
+      "id": 13,
+      "ticketId": 7,
+      "autorId": 11,
+      "tipo": "publico",
+      "texto": "Quedamos a la espera: Sillas de reemplazo solicitadas al almacén.",
+      "creadoEn": "2026-10-09T07:39:00-05:00"
+    },
+    {
+      "id": 14,
+      "ticketId": 8,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Rocío Espinoza. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T06:15:00-05:00"
+    },
+    {
+      "id": 15,
+      "ticketId": 8,
+      "autorId": 14,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T06:36:00-05:00"
+    },
+    {
+      "id": 16,
+      "ticketId": 8,
+      "autorId": 14,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T06:39:00-05:00"
+    },
+    {
+      "id": 17,
+      "ticketId": 11,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Iván Zegarra. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T03:39:00-05:00"
+    },
+    {
+      "id": 18,
+      "ticketId": 11,
+      "autorId": 12,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T04:00:00-05:00"
+    },
+    {
+      "id": 19,
+      "ticketId": 11,
+      "autorId": 12,
+      "tipo": "publico",
+      "texto": "Quedamos a la espera: Proveedor debe entregar los paneles LED.",
+      "creadoEn": "2026-10-09T04:27:00-05:00"
+    },
+    {
+      "id": 20,
+      "ticketId": 12,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Sandra Nolasco. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T00:57:00-05:00"
+    },
+    {
+      "id": 21,
+      "ticketId": 12,
+      "autorId": 13,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T01:18:00-05:00"
+    },
+    {
+      "id": 22,
+      "ticketId": 12,
+      "autorId": 13,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T01:21:00-05:00"
+    },
+    {
+      "id": 23,
+      "ticketId": 13,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Marco Huamán. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-08T23:21:00-05:00"
+    },
+    {
+      "id": 24,
+      "ticketId": 13,
+      "autorId": 11,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-08T23:42:00-05:00"
+    },
+    {
+      "id": 25,
+      "ticketId": 13,
+      "autorId": 11,
+      "tipo": "publico",
+      "texto": "Se niveló la pata con un regatón nuevo.",
+      "creadoEn": "2026-10-09T09:00:00-05:00"
+    },
+    {
+      "id": 26,
+      "ticketId": 14,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Julio Paredes. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-08T14:09:00-05:00"
+    },
+    {
+      "id": 27,
+      "ticketId": 14,
+      "autorId": 10,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-08T14:30:00-05:00"
+    },
+    {
+      "id": 28,
+      "ticketId": 14,
+      "autorId": 10,
+      "tipo": "publico",
+      "texto": "Se cambiaron las pilas y se re-sincronizó el receptor.",
+      "creadoEn": "2026-10-09T06:00:00-05:00"
+    },
+    {
+      "id": 29,
+      "ticketId": 15,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Julio Paredes. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-08T04:09:00-05:00"
+    },
+    {
+      "id": 30,
+      "ticketId": 15,
+      "autorId": 10,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-08T04:30:00-05:00"
+    },
+    {
+      "id": 31,
+      "ticketId": 15,
+      "autorId": 10,
+      "tipo": "publico",
+      "texto": "Quedamos a la espera: Espera de lámpara de repuesto del proveedor.",
+      "creadoEn": "2026-10-08T04:57:00-05:00"
+    },
+    {
+      "id": 32,
+      "ticketId": 16,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Julio Paredes. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-09T08:39:00-05:00"
+    },
+    {
+      "id": 33,
+      "ticketId": 16,
+      "autorId": 10,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-09T09:00:00-05:00"
+    },
+    {
+      "id": 34,
+      "ticketId": 16,
+      "autorId": 10,
+      "tipo": "publico",
+      "texto": "Estoy en el ambiente revisando la falla. Te aviso al terminar.",
+      "creadoEn": "2026-10-09T09:03:00-05:00"
+    },
+    {
+      "id": 35,
+      "ticketId": 17,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Rocío Espinoza. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-03T10:09:00-05:00"
+    },
+    {
+      "id": 36,
+      "ticketId": 17,
+      "autorId": 14,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-03T10:30:00-05:00"
+    },
+    {
+      "id": 37,
+      "ticketId": 17,
+      "autorId": 14,
+      "tipo": "publico",
+      "texto": "Limpieza profunda del ambiente y retiro de residuos del evento.",
+      "creadoEn": "2026-10-03T19:36:00-05:00"
+    },
+    {
+      "id": 38,
+      "ticketId": 18,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignado a Iván Zegarra. Revisará la extensión hoy.",
+      "creadoEn": "2026-09-30T04:46:12-05:00"
+    },
+    {
+      "id": 39,
+      "ticketId": 18,
+      "autorId": 12,
+      "tipo": "interno",
+      "texto": "Canaleta suelta y cable pelado; se necesita repuesto de canaleta.",
+      "creadoEn": "2026-09-30T09:00:00-05:00"
+    },
+    {
+      "id": 40,
+      "ticketId": 18,
+      "autorId": 12,
+      "tipo": "publico",
+      "texto": "Se reemplazó la extensión y se fijó la canaleta. Queda operativo.",
+      "creadoEn": "2026-10-01T05:26:24-05:00"
+    },
+    {
+      "id": 41,
+      "ticketId": 20,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Julio Paredes. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-04T07:09:00-05:00"
+    },
+    {
+      "id": 42,
+      "ticketId": 20,
+      "autorId": 10,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-04T07:30:00-05:00"
+    },
+    {
+      "id": 43,
+      "ticketId": 20,
+      "autorId": 10,
+      "tipo": "publico",
+      "texto": "Se ajustó el brazo hidráulico y se cambió el pestillo.",
+      "creadoEn": "2026-10-04T10:00:00-05:00"
+    },
+    {
+      "id": 44,
+      "ticketId": 21,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Hernán Loayza. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-06T10:09:00-05:00"
+    },
+    {
+      "id": 45,
+      "ticketId": 21,
+      "autorId": 15,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-06T10:30:00-05:00"
+    },
+    {
+      "id": 46,
+      "ticketId": 21,
+      "autorId": 15,
+      "tipo": "publico",
+      "texto": "Se recargó el gas refrigerante.",
+      "creadoEn": "2026-10-06T22:00:00-05:00"
+    },
+    {
+      "id": 47,
+      "ticketId": 21,
+      "autorId": 1,
+      "tipo": "publico",
+      "texto": "Reapertura: Volvió a fallar al día siguiente: solo bota aire caliente.",
+      "creadoEn": "2026-10-09T06:00:00-05:00"
+    },
+    {
+      "id": 48,
+      "ticketId": 22,
+      "autorId": 16,
+      "tipo": "publico",
+      "texto": "Asignamos tu ticket a Marco Huamán. Se atenderá dentro del tiempo esperado.",
+      "creadoEn": "2026-10-07T10:09:00-05:00"
+    },
+    {
+      "id": 49,
+      "ticketId": 22,
+      "autorId": 11,
+      "tipo": "interno",
+      "texto": "Revisión inicial en el ambiente. Se identifica la causa probable.",
+      "creadoEn": "2026-10-07T10:30:00-05:00"
+    },
+    {
+      "id": 50,
+      "ticketId": 22,
+      "autorId": 11,
+      "tipo": "publico",
+      "texto": "Quedamos a la espera: Espera de visita del proveedor de cortinas.",
+      "creadoEn": "2026-10-07T10:57:00-05:00"
+    }
+  ],
+  "historialEstados": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 7,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T09:42:00-05:00"
+    },
+    {
+      "id": 2,
+      "ticketId": 2,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 2,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T09:18:00-05:00"
+    },
+    {
+      "id": 3,
+      "ticketId": 3,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T08:48:00-05:00"
+    },
+    {
+      "id": 4,
+      "ticketId": 3,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 15,
+      "motivo": null,
+      "creadoEn": "2026-10-09T09:15:00-05:00"
+    },
+    {
+      "id": 5,
+      "ticketId": 4,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 4,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T08:24:00-05:00"
+    },
+    {
+      "id": 6,
+      "ticketId": 5,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 5,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T07:54:00-05:00"
+    },
+    {
+      "id": 7,
+      "ticketId": 5,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 11,
+      "motivo": null,
+      "creadoEn": "2026-10-09T08:21:00-05:00"
+    },
+    {
+      "id": 8,
+      "ticketId": 6,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 6,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T07:18:00-05:00"
+    },
+    {
+      "id": 9,
+      "ticketId": 6,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 12,
+      "motivo": null,
+      "creadoEn": "2026-10-09T07:45:00-05:00"
+    },
+    {
+      "id": 10,
+      "ticketId": 7,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 7,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T06:42:00-05:00"
+    },
+    {
+      "id": 11,
+      "ticketId": 7,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 11,
+      "motivo": null,
+      "creadoEn": "2026-10-09T07:09:00-05:00"
+    },
+    {
+      "id": 12,
+      "ticketId": 7,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "en_espera",
+      "autorId": 11,
+      "motivo": "Sillas de reemplazo solicitadas al almacén.",
+      "creadoEn": "2026-10-09T07:39:00-05:00"
+    },
+    {
+      "id": 13,
+      "ticketId": 8,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 8,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T06:06:00-05:00"
+    },
+    {
+      "id": 14,
+      "ticketId": 8,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 14,
+      "motivo": null,
+      "creadoEn": "2026-10-09T06:33:00-05:00"
+    },
+    {
+      "id": 15,
+      "ticketId": 9,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T05:42:00-05:00"
+    },
+    {
+      "id": 16,
+      "ticketId": 10,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 3,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T04:54:00-05:00"
+    },
+    {
+      "id": 17,
+      "ticketId": 11,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 4,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T03:30:00-05:00"
+    },
+    {
+      "id": 18,
+      "ticketId": 11,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 12,
+      "motivo": null,
+      "creadoEn": "2026-10-09T03:57:00-05:00"
+    },
+    {
+      "id": 19,
+      "ticketId": 11,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "en_espera",
+      "autorId": 12,
+      "motivo": "Proveedor debe entregar los paneles LED.",
+      "creadoEn": "2026-10-09T04:27:00-05:00"
+    },
+    {
+      "id": 20,
+      "ticketId": 12,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 5,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T00:48:00-05:00"
+    },
+    {
+      "id": 21,
+      "ticketId": 12,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 13,
+      "motivo": null,
+      "creadoEn": "2026-10-09T01:15:00-05:00"
+    },
+    {
+      "id": 22,
+      "ticketId": 13,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 7,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-08T23:12:00-05:00"
+    },
+    {
+      "id": 23,
+      "ticketId": 13,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 11,
+      "motivo": null,
+      "creadoEn": "2026-10-08T23:39:00-05:00"
+    },
+    {
+      "id": 24,
+      "ticketId": 13,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 11,
+      "motivo": null,
+      "creadoEn": "2026-10-09T09:00:00-05:00"
+    },
+    {
+      "id": 25,
+      "ticketId": 14,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 8,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-08T14:00:00-05:00"
+    },
+    {
+      "id": 26,
+      "ticketId": 14,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-08T14:27:00-05:00"
+    },
+    {
+      "id": 27,
+      "ticketId": 14,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-09T06:00:00-05:00"
+    },
+    {
+      "id": 28,
+      "ticketId": 15,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 2,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-08T04:00:00-05:00"
+    },
+    {
+      "id": 29,
+      "ticketId": 15,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-08T04:27:00-05:00"
+    },
+    {
+      "id": 30,
+      "ticketId": 15,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "en_espera",
+      "autorId": 10,
+      "motivo": "Espera de lámpara de repuesto del proveedor.",
+      "creadoEn": "2026-10-08T04:57:00-05:00"
+    },
+    {
+      "id": 31,
+      "ticketId": 16,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 3,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-09T08:30:00-05:00"
+    },
+    {
+      "id": 32,
+      "ticketId": 16,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-09T08:57:00-05:00"
+    },
+    {
+      "id": 33,
+      "ticketId": 17,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-03T10:00:00-05:00"
+    },
+    {
+      "id": 34,
+      "ticketId": 17,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 14,
+      "motivo": null,
+      "creadoEn": "2026-10-03T10:27:00-05:00"
+    },
+    {
+      "id": 35,
+      "ticketId": 17,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 14,
+      "motivo": null,
+      "creadoEn": "2026-10-03T19:36:00-05:00"
+    },
+    {
+      "id": 36,
+      "ticketId": 17,
+      "estadoAnterior": "resuelto",
+      "estadoNuevo": "cerrado",
+      "autorId": 14,
+      "motivo": "Solución aplicada",
+      "creadoEn": "2026-10-03T22:00:00-05:00"
+    },
+    {
+      "id": 37,
+      "ticketId": 18,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-09-30T04:00:00-05:00"
+    },
+    {
+      "id": 38,
+      "ticketId": 18,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 12,
+      "motivo": null,
+      "creadoEn": "2026-09-30T05:07:48-05:00"
+    },
+    {
+      "id": 39,
+      "ticketId": 18,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "en_espera",
+      "autorId": 12,
+      "motivo": "Repuesto de canaleta",
+      "creadoEn": "2026-09-30T10:55:48-05:00"
+    },
+    {
+      "id": 40,
+      "ticketId": 18,
+      "estadoAnterior": "en_espera",
+      "estadoNuevo": "en_atencion",
+      "autorId": 12,
+      "motivo": "Llegó el repuesto",
+      "creadoEn": "2026-10-01T05:25:48-05:00"
+    },
+    {
+      "id": 41,
+      "ticketId": 18,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 12,
+      "motivo": null,
+      "creadoEn": "2026-10-01T05:26:24-05:00"
+    },
+    {
+      "id": 42,
+      "ticketId": 18,
+      "estadoAnterior": "resuelto",
+      "estadoNuevo": "cerrado",
+      "autorId": 12,
+      "motivo": "Solución aplicada",
+      "creadoEn": "2026-10-01T10:12:00-05:00"
+    },
+    {
+      "id": 43,
+      "ticketId": 19,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-09-27T10:00:00-05:00"
+    },
+    {
+      "id": 44,
+      "ticketId": 19,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "cancelado",
+      "autorId": 1,
+      "motivo": "Ya la cambiaron los de limpieza.",
+      "creadoEn": "2026-09-27T12:24:00-05:00"
+    },
+    {
+      "id": 45,
+      "ticketId": 20,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 6,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-04T07:00:00-05:00"
+    },
+    {
+      "id": 46,
+      "ticketId": 20,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-04T07:27:00-05:00"
+    },
+    {
+      "id": 47,
+      "ticketId": 20,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 10,
+      "motivo": null,
+      "creadoEn": "2026-10-04T10:00:00-05:00"
+    },
+    {
+      "id": 48,
+      "ticketId": 20,
+      "estadoAnterior": "resuelto",
+      "estadoNuevo": "cerrado",
+      "autorId": 10,
+      "motivo": "Solución aplicada",
+      "creadoEn": "2026-10-04T12:24:00-05:00"
+    },
+    {
+      "id": 49,
+      "ticketId": 21,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 1,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-06T10:00:00-05:00"
+    },
+    {
+      "id": 50,
+      "ticketId": 21,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 15,
+      "motivo": null,
+      "creadoEn": "2026-10-06T10:27:00-05:00"
+    },
+    {
+      "id": 51,
+      "ticketId": 21,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "resuelto",
+      "autorId": 15,
+      "motivo": null,
+      "creadoEn": "2026-10-06T22:00:00-05:00"
+    },
+    {
+      "id": 52,
+      "ticketId": 21,
+      "estadoAnterior": "resuelto",
+      "estadoNuevo": "cerrado",
+      "autorId": 15,
+      "motivo": "Solución aplicada",
+      "creadoEn": "2026-10-07T00:24:00-05:00"
+    },
+    {
+      "id": 53,
+      "ticketId": 21,
+      "estadoAnterior": "cerrado",
+      "estadoNuevo": "reabierto",
+      "autorId": 1,
+      "motivo": "Volvió a fallar al día siguiente: solo bota aire caliente.",
+      "creadoEn": "2026-10-09T06:00:00-05:00"
+    },
+    {
+      "id": 54,
+      "ticketId": 22,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 7,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-07T10:00:00-05:00"
+    },
+    {
+      "id": 55,
+      "ticketId": 22,
+      "estadoAnterior": "abierto",
+      "estadoNuevo": "en_atencion",
+      "autorId": 11,
+      "motivo": null,
+      "creadoEn": "2026-10-07T10:27:00-05:00"
+    },
+    {
+      "id": 56,
+      "ticketId": 22,
+      "estadoAnterior": "en_atencion",
+      "estadoNuevo": "en_espera",
+      "autorId": 11,
+      "motivo": "Espera de visita del proveedor de cortinas.",
+      "creadoEn": "2026-10-07T10:57:00-05:00"
+    },
+    {
+      "id": 57,
+      "ticketId": 23,
+      "estadoAnterior": null,
+      "estadoNuevo": "abierto",
+      "autorId": 2,
+      "motivo": "Ticket registrado",
+      "creadoEn": "2026-10-08T08:00:00-05:00"
+    }
+  ]
+}

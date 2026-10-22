@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 22" shape-rendering="crispEdges" role="img" aria-label="Claude bailando">
+  <!-- Easter egg de la landing: el personaje de Claude en pixel art, bailando -->
+  <style>
+    .cuerpo { animation: rebote .5s steps(2) infinite; transform-origin: 12px 20px; }
+    .brazo-izq { animation: brazo-izq .5s steps(2) infinite; transform-origin: 4px 10px; }
+    .brazo-der { animation: brazo-der .5s steps(2) infinite; transform-origin: 20px 10px; }
+    .pierna-a { animation: pierna .5s steps(2) infinite; }
+    .pierna-b { animation: pierna .5s steps(2) infinite reverse; }
+    @keyframes rebote { 0% { transform: translateY(0) rotate(-6deg); } 100% { transform: translateY(-2px) rotate(6deg); } }
+    @keyframes brazo-izq { 0% { transform: rotate(0); } 100% { transform: rotate(-35deg); } }
+    @keyframes brazo-der { 0% { transform: rotate(-35deg); } 100% { transform: rotate(35deg); } }
+    @keyframes pierna { 0% { transform: translateY(0); } 100% { transform: translateY(-1px); } }
+  </style>
+  <g fill="#D97757">
+    <g class="cuerpo">
+      <rect x="5" y="4" width="14" height="11" />
+      <rect class="brazo-izq" x="2" y="9" width="3" height="3" />
+      <rect class="brazo-der" x="19" y="9" width="3" height="3" />
+      <rect x="8" y="7" width="2" height="3" fill="#141C24" />
+      <rect x="14" y="7" width="2" height="3" fill="#141C24" />
+    </g>
+    <rect class="pierna-a" x="6" y="15" width="2" height="5" />
+    <rect class="pierna-b" x="9" y="15" width="2" height="5" />
+    <rect class="pierna-a" x="13" y="15" width="2" height="5" />
+    <rect class="pierna-b" x="16" y="15" width="2" height="5" />
+  </g>
+</svg>

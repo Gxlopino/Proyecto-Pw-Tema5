@@ -7,7 +7,7 @@
     "prepare:dist": "node -e \"require('fs').mkdirSync('public/dist', { recursive: true })\"",
     "dev-old": "vite",
     "dev": "concurrently --names \"REACT,EXPRESS\" --prefix-colors \"cyan,green\" \"vite build & npm run watch\" \"npm run dev-server\"",
-    "build": "mkdir -p public/dist && vite build",
+    "build": "npm run prepare:dist && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "watch2": "chokidar \"src/**/*\" -c \"vite build\"",

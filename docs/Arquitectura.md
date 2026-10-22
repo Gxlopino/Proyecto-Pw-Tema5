@@ -1,302 +1,277 @@
-# **Arquitectura — Mesa de ayuda de servicios del campus (Tema 5\)**
+# **Arquitectura — Mesa de ayuda de servicios del campus (Tema 5)**
 
 Programación Web 2026-2 · Universidad de Lima
-Base: plantilla del curso (React \+ Vite · Node \+ Express · Supabase · Vercel).
------------------------------------------------------------------------------------
-
-## **1\. Decisiones clave**
-
-| \# | Decisión                                                                                                                                                                      | Por qué                                                                                |
-| :- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
-| 1  | Se mantiene**la misma estructura de carpetas de la plantilla** (admin, api, configs, db, docs, prompts, public, src, views, website). No se crean carpetas raíz nuevas. | Es lo que se ve en clase y lo que pide el docente.                                      |
-| 2  | code:website/\= backend de **Visitante \+ Usuario**. code:admin/ \= backend de **Técnico \+ Supervisor**.                                                         | Encaja con "sitio web" vs "panel administrativo" de la plantilla.                       |
-| 3  | Backend en**capas**: code:routes → controllers → services → repositories → Supabase.                                                                                 | Requisito del docente: sin acceso a datos en controladores ni consultas en componentes. |
-| 4  | Cada archivo pertenece a**una sola HU** (el nombre del archivo lo deja claro).                                                                                           | "Nadie escribe sobre las entidades de otro" → casi cero conflictos de merge.           |
-| 5  | **Una sola fuente de datos de prueba**: code:db/seed/seed.json. El front la consume en la Entrega 1; en la Entrega 2 se carga a Supabase.                                | Pide el docente: mismo JSON en ambas entregas.                                          |
-| 6  | El front nunca llama a code:fetch ni lee el JSON dentro de los componentes: usa code:src/services/\*. En la Entrega 2 solo se cambia la implementación de los services.       | Entrega 1 → Entrega 2 sin reescribir pantallas.                                        |
-| 7  | Rutas del front separadas por rol: code:/usuario/\*, code:/tecnico/\*, code:/supervisor/\*.                                                                                    | Facilita proteger rutas por rol (HU-1) y entender el árbol.                            |
+Base: plantilla del curso (React + Vite · Node + Express · Supabase · Vercel).
 
 ---
 
-## **2\. Estructura de carpetas**
+## **1. Decisiones clave**
+
+| # | Decisión | Por qué |
+| :- | :------- | :------ |
+| 1 | Se mantiene **la misma estructura de carpetas de la plantilla** (admin, api, configs, db, docs, public, src, views, website). | Es lo que se ve en clase y lo que pide el docente. |
+| 2 | **Una mini-app React por rol** (`web`, `usuario`, `tecnico`, `supervisor`), cada una con su `home.ejs`. | Forma de trabajo del docente: cada rol solo descarga y ve lo suyo. |
+| 3 | **Login validado en el servidor con sesión** (`express-session`): `req.session.userId`, `username` y `role`. | El front ya no decide quién está logueado; solo pregunta `GET /api/v1/sessions`. |
+| 4 | **Rutas protegidas con middlewares por rol** (`soloLogueado`, `soloUsuario`, `soloTecnico`, `soloSupervisor`). Una línea de Express por cada ruta de React Router. | F5 funciona en cualquier ruta y el servidor corta el acceso antes de enviar la app. |
+| 5 | Backend en **capas**: routes → controllers / apis → services → repositories. | Sin acceso a datos en controladores ni consultas en componentes. |
+| 6 | Organización del front **por rol, no por historia**. Cada página empieza con `// HU-x · mockup · Rol`. | Se ubica rápido qué historia y qué mockup cubre cada archivo. |
+| 7 | **Una sola fuente de datos de prueba**: `db/seed/seed.json`. El servidor la usa para las cuentas y el front para tickets, catálogo, cola y atención; en la Entrega 2 se carga a Supabase. | Pide el docente: mismo JSON en ambas entregas. |
+| 8 | El front nunca llama a `axios`/`fetch` ni lee el JSON dentro de los componentes: usa `src/services/*`. | Entrega 1 → Entrega 2 sin reescribir pantallas. |
+
+---
+
+## **2. Estructura de carpetas**
 
 ```
-Proyecto-Pw-Tema5/
-├── admin/                     ← backend Técnico + Supervisor
-│   ├── apis/                    categorias_apis.js, ambientes_apis.js, tecnico_categorias_apis.js, cola_apis.js, atencion_apis.js, satisfaccion_apis.js, metricas_apis.js, usuarios_apis.js
-│   ├── configs/                 routes.js
-│   ├── controllers/             (controladores separados por cada HU mencionada arriba)
-│   ├── models/                  categoria.js, ambiente.js, tecnico_categoria.js, asignacion.js, cambio_prioridad.js, bitacora_entrada.js, historial_estado.js[cite: 5]
-│   ├── repositories/            (repositorios separados por cada HU)[cite: 5]
-│   └── services/                (servicios con reglas de negocio separados por cada HU)[cite: 5]
-├── api/
-│   └── index.js               ← entrada serverless de Vercel (exporta la app Express)
+PROYECTO-PW-T5/
+├── admin/
+│   ├── configs/routes.js        ← una línea por ruta de React Router de cada rol (+ APIs de nations)
+│   ├── controllers/             usuario_controllers.js, tecnico_controllers.js, supervisor_controllers.js
+│   └── apis/ models/ repositories/ services/   ← nations (ejemplo del docente para la Entrega 2)
+├── api/index.js                 ← entrada serverless de Vercel (exporta la app Express)
 ├── configs/
-│   ├── bootstrap.js, database.js, helpers.js, middlewares.js
+│   ├── bootstrap.js             sesión (express-session + session-file-store), vistas, estáticos, rutas
+│   ├── middlewares.js           soloLogueado, soloUsuario, soloTecnico, soloSupervisor, redireccionarSiLogueado, 404
+│   └── helpers.js               rutaInicio(role)
 ├── db/
-│   ├── schema.sql
-│   ├── seed/
-│   │   └── seed.json            ← fuente compartida de datos semilla para Entrega 1 y 2[cite: 5]
-│   └── migrations/              ← migraciones por HU (reemplazan a las de la plantilla)[cite: 5]
-│       ├── 001_hu1_usuarios.sql[cite: 5]
-│       ├── 002_hu2_catalogo.sql[cite: 5]
-│       ├── 003_hu3_tickets.sql[cite: 5]
-│       ├── 004_hu4_cola.sql[cite: 5]
-│       ├── 005_hu5_atencion.sql[cite: 5]
-│       ├── 006_hu6_encuestas.sql[cite: 5]
-│       └── 007_hu7_metricas.sql[cite: 5]
+│   ├── seed/seed.json           ← fuente compartida de datos semilla para la Entrega 1 y 2
+│   └── migrations/, schema.sql
 ├── docs/
-│   └── Arquitectura.md, database.puml, estructura.txt, Proyecto_PW_2026-2_Tema5_Mesa_de_Ayuda.docx, Tema5_Mockups_f.pdf
-├── prompts/               
-├── public/                
-│   ├── favicon.ico
-│   └── assets/img/          
-├── src/                       ← React
-│   ├── context/                 AuthContext.jsx, NotificationContext.jsx (para sesión global)[cite: 5]
-│   ├── routes/                  AppRouter.jsx, ProtectedRoute.jsx (para proteger rutas según rol)[cite: 5]
-│   ├── services/                api.client.js, tickets.service.js, auth.service.js, etc. (consumen seed.json o fetch)[cite: 5]
-│   ├── assets/                  hero.png, react.svg, vite.svg
-│   ├── entries/                 admin.jsx, web.jsx, admin.css, web.css
-│   ├── helpers/                 datetime.js, random.js, navigation.js (para ocultar HU_ACTIVAS)[cite: 5]
-│   ├── pages/                   ← Páginas organizadas por HU (reemplazan a DashboardPage, PlayersPage, etc.)[cite: 5]
-│   │   ├── hu1-cuenta/          Landing.jsx, Login.jsx, Registro.jsx, AltaInvitacion.jsx, RecuperarPassword.jsx, MiCuenta.jsx, AccesoDenegado.jsx, NoEncontrado.jsx[cite: 5]
-│   │   ├── hu2-catalogo/        Categorias.jsx, CategoriaForm.jsx, Ambientes.jsx, TecnicosPorCategoria.jsx[cite: 5]
-│   │   ├── hu3-tickets/         NuevoTicket.jsx, ConfirmacionTicket.jsx, MisTickets.jsx, DetalleTicketUsuario.jsx[cite: 5]
-│   │   ├── hu4-cola/            ColaAtencion.jsx, BandejaTecnico.jsx, BandejasTecnicos.jsx[cite: 5]
-│   │   ├── hu5-atencion/        DetalleTicketTecnico.jsx, HistorialCambios.jsx[cite: 5]
-│   │   ├── hu6-encuestas/       Encuesta.jsx, MisEncuestas.jsx, Satisfaccion.jsx[cite: 5]
-│   │   └── hu7-metricas/        Tablero.jsx, CargaTecnicos.jsx, Usuarios.jsx, FichaUsuario.jsx[cite: 5]
-│   ├── partials/                Navbar.jsx, Sidebar.jsx, Footer.jsx[cite: 5]
-│   └── widgets/                 Modal.jsx, ConfirmDialog.jsx, EmptyState.jsx, Toast.jsx, Bitacora.jsx, TicketCard.jsx (módulo común del grupo)[cite: 5]
-├── views/                     ← plantillas EJS
-│   ├── 401.ejs, 404.ejs
-│   ├── admin/                   home.ejs
-│   ├── layouts/                 admin.ejs, website.ejs
-│   ├── partials/                _flash_message.ejs, _footer.ejs, _navbar.ejs
-│   └── website/                 home.ejs, about.ejs, sign-in.ejs...
-├── website/                   ← backend Visitante + Usuario[cite: 5]
-│   ├── apis/                    auth_apis.js, cuenta_apis.js, tickets_apis.js, encuestas_apis.js (desplegar en carpetas igual que admin)[cite: 5]
-│   ├── configs/                 routes.js
-│   ├── controllers/             (controladores por HU)[cite: 5]
-│   ├── models/                  usuario.js, ticket.js, encuesta.js[cite: 5]
-│   ├── repositories/            (repositorios por HU)[cite: 5]
-│   └── services/                (servicios por HU)[cite: 5]
-├── .gitignore  .vercelignore
-├── package.json  package-lock.json
-└── README.md  server.js  vercel.json  vite.config.js
+├── public/
+│   ├── assets/css/site.css      ← sistema de diseño para las páginas EJS sin React
+│   ├── assets/img/claude-bailando.svg   (easter egg de la landing)
+│   └── dist/                    ← build de Vite: css/app.css, css/<rol>.css, js/app.js, js/atencion.js, js/<rol>.js
+├── src/
+│   ├── entries/
+│   │   ├── visitante.jsx        /registro, /recuperar, /invitacion/:token (sin sesión; cabecera y pie en website.ejs)
+│   │   ├── usuario.jsx          UsuarioLayout = CabeceraUsuario + SideBarUsuario + <Outlet/> + FooterUsuario
+│   │   ├── tecnico.jsx          TecnicoLayout
+│   │   ├── supervisor.jsx       SupervisorLayout (reutiliza el detalle e historial del técnico)
+│   │   └── app.css              sistema de diseño (colores, IBM Plex…), lo importan todas las entries
+│   ├── partials/                Cabecera<Rol>, SideBar<Rol>, Footer<Rol> (cada SideBar tiene su menú)
+│   ├── pages/
+│   │   ├── visitante/           Registro, RecuperarPassword, AltaInvitacion            (HU-1)
+│   │   ├── usuario/             MisTickets, NuevoTicket, ConfirmacionTicket, DetalleTicket (HU-3)
+│   │   ├── tecnico/             Bandeja (HU-4), DetalleTicket, HistorialCambios (HU-5)
+│   │   └── supervisor/          Cola, BandejasTecnicos (HU-4), Categorias, CategoriaForm, Ambientes,
+│   │                            TecnicosPorCategoria (HU-2)
+│   ├── context/AuthContext.jsx  GET /api/v1/sessions al iniciar; no pinta la app hasta tener respuesta
+│   ├── services/                api.client, auth (APIs del servidor), tickets, catalogo, cola, atencion (seed + localStorage)
+│   ├── widgets/                 comunes a todos los roles: Badges, Modal, ConfirmDialog, EmptyState, Bitacora,
+│   │                            TicketCard, Paginacion, FormField, MiCuenta, NoEncontrado, BuscadorTicket, ScrollToTop
+│   └── helpers/                 datetime.js, validation.js, navigation.js (ROLES, rutaInicio)
+├── views/
+│   ├── layouts/website.ejs      <head> + _navbar + body + _footer (vistas del visitante)
+│   ├── layouts/access.ejs       página centrada sin navbar (login, 401, 403, 404; el 403 con cabecera de la sesión)
+│   ├── layouts/admin.ejs        solo body + css/app.css + css/<rol>.css + js/<rol>.js (recibe "rol")
+│   ├── partials/                _navbar.ejs, _footer.ejs, _flash_message.ejs
+│   ├── visitante/               home.ejs (1.1), login.ejs (1.2), cuenta.ejs (#root + visitante.js)
+│   ├── usuario/ tecnico/ supervisor/   home.ejs (#root)
+│   └── 401.ejs, 403.ejs, 404.ejs
+├── website/                     ← visitante y cuenta (HU-1), misma forma que admin/
+│   ├── configs/routes.js        /, /login, /logout, /registro, /recuperar, /invitacion/:token y /api/v1/...
+│   ├── controllers/visitante_controllers.js   home, login, ingresar, logout, cuenta
+│   ├── apis/cuenta_apis.js      JSON { success, message, data, error } (las usan visitante y roles logueados)
+│   ├── services/cuenta_services.js        reglas de negocio de HU-1
+│   └── repositories/cuenta_repositories.js única capa que toca usuarios, invitaciones, unidades y tokens (memoria)
+└── package.json, server.js, vercel.json, vite.config.js
 ```
 
 ---
 
-## **3\. Reglas de capas (backend)**
+## **3. Reglas de capas (backend)**
 
-| Capa              | Hace                                                                  | NO hace                           |
-| :---------------- | :-------------------------------------------------------------------- | :-------------------------------- |
-| code:routes       | Declara endpoint\+ middlewares (code:auth, code:roles, code:validate) | Lógica                           |
-| code:controllers  | Lee code:req, llama al service, responde con código HTTP correcto    | Consultas a BD, reglas de negocio |
-| code:services     | Reglas de negocio (transiciones de estado, plazos, validaciones)      | Tocar code:req/res                |
-| code:repositories | Única capa que habla con Supabase                                    | Reglas de negocio                 |
+| Capa | Hace | NO hace |
+| :--- | :--- | :------ |
+| routes | Declara endpoint + middlewares (`soloLogueado`, `solo<Rol>`, `redireccionarSiLogueado`) | Lógica |
+| controllers / apis | Leen `req`, llaman al service, responden con el código HTTP correcto (vista EJS o JSON) | Tocar datos, reglas de negocio |
+| services | Reglas de negocio (bloqueo de login, validaciones, invitaciones, recuperación) | Tocar `req`/`res` |
+| repositories | Única capa que lee y escribe los datos (Entrega 1: memoria cargada del seed; Entrega 2: Supabase) | Reglas de negocio |
 
 Reglas extra:
 
 * Las validaciones del front se repiten en el servidor.
-* Contraseñas con code:bcryptjs. Sesión con JWT.
-* Credenciales solo en code:.env (nunca en el repo). Se sube code:.env.example.
-* Códigos HTTP: 200/201 ok · 400 validación · 401 sin sesión · 403 rol incorrecto · 404 no existe · 409 conflicto (ticket duplicado, transición inválida).
-* Un repository puede ser importado para leer por otra HU, nunca para escribir en entidades ajenas.
-
-Prefijos de API:
-
-* code:website/ → code:/api/website/...
-* code:admin/ → code:/api/admin/...
+* Credenciales solo en `.env` (nunca en el repo). Se sube `.env.example`.
+* Códigos HTTP: 200/201 ok · 400 validación · **401 sin sesión · 403 con sesión pero con otro rol** (mockup 1.7) y
+  también cuenta bloqueada o inactiva · 404 no existe · 409 conflicto (correo ya registrado, invitación usada o vencida).
+* En errores 400 de las APIs, `error` trae los mensajes por campo: `{ campo: mensaje }`.
 
 ---
 
-## **4\. Mapa HU → archivos**
+## **4. Sesión: cómo funciona**
 
-| HU                                                     | Entidades que posee                                       | Páginas (code:src/pages)                                                                           | Back                                                  | Migración |
-| :----------------------------------------------------- | :-------------------------------------------------------- | :-------------------------------------------------------------------------------------------------- | :---------------------------------------------------- | :--------- |
-| **HU-1** Cuenta y acceso                         | usuario, invitación                                      | Landing, Login, Registro, AltaInvitacion, RecuperarPassword, MiCuenta, AccesoDenegado, NoEncontrado | code:website: auth, cuenta                            | 001        |
-| **HU-2** Catálogo                               | categoría, subcategoría, ambiente, técnico\_categoría | Categorias, CategoriaForm, Ambientes, TecnicosPorCategoria                                          | code:admin: categorias, ambientes, tecnico-categorias | 002        |
-| **HU-3** Registro de tickets                     | ticket                                                    | NuevoTicket, ConfirmacionTicket, MisTickets, DetalleTicketUsuario                                   | code:website: tickets                                 | 003        |
-| **HU-4** Cola y asignación                      | asignación, cambio\_prioridad                            | ColaAtencion, BandejaTecnico, BandejasTecnicos                                                      | code:admin: cola                                      | 004        |
-| **HU-5** Atención y cierre                      | bitácora\_entrada, historial\_estado                     | DetalleTicketTecnico, HistorialCambios                                                              | code:admin: atencion                                  | 005        |
-| **HU-6** Encuestas *(equipo de 6\)*            | encuesta                                                  | Encuesta, MisEncuestas, Satisfaccion                                                                | code:website: encuestas · code:admin: satisfaccion   | 006        |
-| **HU-7** Métricas y usuarios *(equipo de 7\)* | solo lectura\+ bloqueo                                    | Tablero, CargaTecnicos, Usuarios, FichaUsuario                                                      | code:admin: metricas, usuarios                        | 007        |
+1. `GET /login` (EJS). El formulario hace `POST /login` con `email`, `password` y `recordar`.
+2. `controllers.ingresar` llama a `services.login`:
+   * correo o contraseña incorrectos → suma un intento; a los 5, bloqueo de 15 minutos;
+   * cuenta `bloqueado` o `inactivo` → no entra.
+   Si falla, vuelve a pintar `login.ejs` con `mensaje` (alerta roja).
+3. Si es correcto guarda `req.session.userId`, `req.session.username` (correo) y `req.session.role`, y hace
+   `req.session.save(() => res.redirect(rutaInicio(role)))`: usuario → `/usuario/tickets`,
+   técnico → `/tecnico/bandeja`, supervisor → `/supervisor/cola`.
+4. Cada ruta de un rol pasa por `soloLogueado` + `solo<Rol>` y renderiza `<rol>/home.ejs`, que carga
+   `css/app.css` y `js/<rol>.js`. Sin sesión → `401.ejs` ("Debes iniciar sesión"); con sesión de otro rol → `403.ejs` con la sección a la que
+   quiso entrar (calculada de `req.path`), el rol de la cuenta y botones "Ir a mi vista principal" / "Solicitar acceso".
+   En las APIs con rol (`POST /api/v1/invitaciones`) el mismo caso responde 401 / 403 en JSON.
+5. La mini-app arranca con `AuthProvider`: pide `GET /api/v1/sessions` y no se pinta hasta tener la respuesta.
+   Si la sesión expiró vuelve a `/login`.
+6. Registro (`POST /api/v1/registro`) y alta por invitación (`POST /api/v1/invitaciones/:token/aceptar`) dejan la
+   sesión iniciada; la página redirige con `window.location` al panel del rol.
+7. `GET /logout` destruye la sesión, borra la cookie `connect.sid` y redirige a `/login`. "Cerrar sesión" en la
+   cabecera y en el menú es un `<a href="/logout">`.
+8. `redireccionarSiLogueado` manda al panel a quien ya tiene sesión y entra a `/login` o `/registro`.
 
-Excepción conocida: HU-7 bloquea cuentas (escribe code:estado y code:motivoBloqueo en usuario, que es de HU-1). Se resuelve con un único método code:usuarios.repository.cambiarEstado() escrito por HU-1 y usado por HU-7.
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+APIs de cuenta (`website/apis/cuenta_apis.js`):
 
-## **5\. Rutas del front**
+| Método y ruta | Middleware | Uso |
+| ------------- | ---------- | --- |
+| `GET /api/v1/sessions` | soloLogueado | Usuario de la sesión (sin contraseña) |
+| `GET /api/v1/unidades` | — | Unidades para el registro y "Mi cuenta" |
+| `GET /api/v1/registro/disponible?email=` | — | Correo libre (validación en línea del registro) |
+| `POST /api/v1/registro` | — | Crea la cuenta de usuario e inicia sesión |
+| `GET /api/v1/invitaciones/:token` | — | Datos de la invitación |
+| `POST /api/v1/invitaciones/:token/aceptar` | — | Activa la cuenta (técnico: 1 a 3 especialidades) e inicia sesión |
+| `POST /api/v1/invitaciones/:token/rechazar` | — | Rechaza la invitación |
+| `POST /api/v1/invitaciones` | soloSupervisor | Crea una invitación (HU-2 · Técnicos por categoría) |
+| `POST /api/v1/recuperar` | — | Genera el enlace de recuperación (se muestra en pantalla, sin correo real) |
+| `GET /api/v1/recuperar/:token` | — | Valida el enlace |
+| `POST /api/v1/restablecer` | — | Guarda la nueva contraseña |
+| `PUT /api/v1/cuenta` | soloLogueado | Actualiza los datos de "Mi cuenta" |
+| `PUT /api/v1/cuenta/password` | soloLogueado | Cambia la contraseña |
 
-### **Públicas (PublicLayout):**
+---
 
-* code:/
-* code:/login
-* code:/registro
-* code:/invitacion/:token
-* code:/recuperar
-* code:/403
-* code:\* (404)
+## **5. Rutas**
 
-### **Autenticado, todos los roles:**
+### **EJS (sin React)**
 
-* code:/mi-cuenta
+* `/` landing (1.1) · `/login` (1.2) · `/logout` · `401` · `403` (1.7) · `404` (cualquier ruta desconocida)
 
-### **Usuario:**
+### **Mini-app del visitante (`visitante.js`, sin sesión)**
 
-* code:/usuario/tickets/nuevo
-* code:/usuario/tickets/:codigo/confirmacion
-* code:/usuario/tickets
-* code:/usuario/tickets/:codigo
-* code:/usuario/encuesta/:codigo
-* code:/usuario/encuestas
+* `/registro` (con `redireccionarSiLogueado`) · `/recuperar` · `/invitacion/:token`
 
-### **Técnico:**
+### **Usuario (`usuario.js`)**
 
-* code:/tecnico/bandeja
-* code:/tecnico/tickets/:codigo
-* code:/tecnico/tickets/:codigo/historial
+* `/usuario` → `/usuario/tickets` · `/usuario/tickets` · `/usuario/tickets/nuevo` · `/usuario/tickets/:codigo`
+* `/usuario/tickets/:codigo/confirmacion` · `/usuario/mi-cuenta`
 
-### **Supervisor:**
+### **Técnico (`tecnico.js`)**
 
-* code:/supervisor/categorias
-* code:/supervisor/categorias/nueva
-* code:/supervisor/categorias/:id
-* code:/supervisor/ambientes
-* code:/supervisor/tecnicos-categoria
-* code:/supervisor/cola
-* code:/supervisor/bandejas
-* code:/supervisor/tickets/:codigo
-* code:/supervisor/tickets/:codigo/historial
-* code:/supervisor/satisfaccion
-* code:/supervisor/tablero
-* code:/supervisor/carga
-* code:/supervisor/usuarios
-* code:/supervisor/usuarios/:id
-* Redirección tras login (HU-1): usuario → code:/usuario/tickets
-* técnico → code:/tecnico/bandeja
-* supervisor → code:/supervisor/tablero si existe HU-7, si no code:/supervisor/cola.
+* `/tecnico` → `/tecnico/bandeja` · `/tecnico/bandeja` · `/tecnico/tickets/:codigo` · `/tecnico/tickets/:codigo/historial`
+* `/tecnico/mi-cuenta`
 
-El menú lateral oculta automáticamente las HU que no se desarrollan (code:HU\_ACTIVAS en code:src/helpers/navigation.js).
----------------------------------------------------------------------------------------------------------------------------
+### **Supervisor (`supervisor.js`)**
 
-## **6\. Entrega 1 → Entrega 2**
+* `/supervisor` → `/supervisor/cola` · `/supervisor/cola` · `/supervisor/bandejas`
+* `/supervisor/categorias` · `/supervisor/categorias/nueva` · `/supervisor/categorias/:id` · `/supervisor/ambientes`
+* `/supervisor/tecnicos-categoria` · `/supervisor/tickets/:codigo` · `/supervisor/tickets/:codigo/historial`
+* `/supervisor/mi-cuenta`
 
-### **Entrega 1 (semana 9, solo interfaz):**
+Cada app tiene su propia ruta `*` con `NoEncontrado` para los enlaces internos que no existan. Los enlaces dentro de
+una app usan `Link`; los que saltan entre apps (landing → registro, registro → login, cerrar sesión) son `<a href>`.
+El detalle y el historial del ticket del supervisor son las mismas páginas del técnico: sus enlaces salen del
+prefijo del rol actual (`/${usuario.rol}`).
 
-* code:src/services/\*.service.js lee code:db/seed/seed.json y mantiene el estado en memoria (opcional: code:sessionStorage).
-* Cada service expone funciones code:async (devuelven Promesas) aunque el dato sea local.
+### **Pruebas de acceso**
+
+| Caso | Resultado esperado |
+| ---- | ------------------ |
+| Sin sesión: `/usuario/tickets`, `/tecnico/bandeja`, `/supervisor/cola` | 401 "Debes iniciar sesión" |
+| Usuario → `/supervisor/cola` | 403 "No tienes permiso para ver la cola de atención" |
+| Técnico → `/supervisor/categorias` · supervisor → `/usuario/tickets` (y cruzando los demás roles) | 403 con la sección correspondiente |
+| Cada rol en sus propias rutas | 200 |
+| `POST /api/v1/invitaciones` sin sesión / con otro rol | 401 / 403 en JSON |
+| Login correcto | Redirige a la vista inicial de su rol |
+| Login incorrecto | `login` con alerta roja |
+| 5 intentos fallidos | Mensaje de bloqueo por 15 minutos |
+| `psalcedo@ulima.edu.pe` | Cuenta bloqueada |
+| Logueado → `/login` | Vuelve a su panel |
+| `/logout` | Destruye la sesión y va a `/login` |
+| F5 en cualquier ruta interna de cada rol | Sigue mostrando la página |
+| Registro nuevo / `/invitacion/inv-tec-7f3a9c` | Entra como usuario / técnico |
+| Recuperar contraseña | El enlace en pantalla funciona y la nueva contraseña sirve para el login |
+
+---
+
+## **6. Entrega 1 → Entrega 2**
+
+### **Entrega 1 (semana 9):**
+
+* Cuenta y sesión: servidor (`website/`), datos en memoria cargados de `seed.json`.
+* Tickets, catálogo, cola y atención: `src/services/*.service.js` leen `seed.json` y guardan en `localStorage`.
+  Exponen funciones `async` aunque el dato sea local. El usuario de la sesión se copia al `localStorage` para que
+  las cuentas nuevas también se vean en esas vistas.
 
 ### **Entrega 2 (semana 15):**
 
-* Mismas funciones, pero con code:fetch('/api/...') vía code:src/services/api.client.js.
-* El code:seed.json se carga en Supabase con un script (hasheando las contraseñas).
-* Interruptor: code:VITE\_USE\_MOCK=true|false.
+* `website/repositories/cuenta_repositories.js` pasa a consultar Supabase (contraseñas con hash).
+* Mismas funciones en los services del front, pero con `apiGet/apiPost` de `src/services/api.client.js`.
+* Interruptor: `VITE_USE_MOCK=true|false`.
 
-Ejemplo de service:
+Build de Vite (`vite.config.js`):
 
-```js
-// src/services/tickets.service.js
-import seed from '@seed/seed.json';
-import { apiGet } from './api.client';
-
-const USE_MOCK = import.meta.env.VITE_USE_MOCK !== 'false';
-let tickets = structuredClone(seed.tickets);
-
-export async function listarMisTickets(usuarioId) {
-  if (USE_MOCK) return tickets.filter(t => t.solicitanteId === usuarioId);
-  return apiGet(`/api/website/tickets?mios=true`);
-}
-```
-
-Alias necesarios en code:vite.config.js:
-
-```js
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-resolve: {
-  alias: {
-    '@': path.resolve(__dirname, 'src'),
-    '@seed': path.resolve(__dirname, 'db/seed'),
-  },
-},
-```
+* `css/app.css` y `js/app.js`: lo común (librerías, Bootstrap, `src/entries/app.css`, context, services, helpers y widgets).
+* `js/atencion.js`: detalle e historial del ticket, compartidos por técnico y supervisor.
+* `js/<rol>.js` + `css/<rol>.css` (visitante, usuario, tecnico, supervisor): páginas, parciales y CSS propio de cada app
+  (importan solos `app.js` y `atencion.js`).
 
 ---
 
-## **7\. Contrato de datos (borrador para acordar en grupo)**
+## **7. Contrato de datos**
 
-### **usuario**:
+### **usuario**
 
-code:id, code:nombres, code:apellidos, code:email, code:password *(solo seed; en BD code:passwordHash)*, code:telefono, code:unidad, code:vinculo, code:rol (code:usuario|tecnico|supervisor), code:estado (code:activo|inactivo|bloqueado), code:motivoBloqueo, code:especialidades\[\] (ids de categoría), code:ambienteHabitualId, code:creadoEn, code:ultimoAcceso
+`id`, `nombres`, `apellidos`, `email`, `password` *(solo seed; en BD `passwordHash`)*, `telefono`, `unidad`, `vinculo`, `rol` (`usuario|tecnico|supervisor`), `estado` (`activo|inactivo|bloqueado`), `motivoBloqueo`, `especialidades[]` (ids de categoría), `ambienteHabitualId`, `creadoEn`, `ultimoAcceso`
 
 ### **categoria**
 
-(con code:parentId nulo \= categoría; con valor \= subcategoría): code:id, code:nombre, code:parentId, code:prioridadDefecto (code:critica|alta|media|baja), code:tiempoEsperadoHoras, code:descripcion (máx. 240), code:activa
+(con `parentId` nulo = categoría; con valor = subcategoría): `id`, `nombre`, `parentId`, `prioridadDefecto` (`critica|alta|media|baja`), `tiempoEsperadoHoras`, `descripcion` (máx. 240), `activa`
 
-### **ambiente**:
+### **ambiente**
 
-code:id, code:codigo (A-201), code:tipo, code:pabellon, code:piso, code:sede, code:capacidad
+`id`, `codigo` (A-201), `tipo`, `pabellon`, `piso`, `sede`, `capacidad`
 
-### **tecnico\_categoria**:
+### **tecnico_categoria**
 
-code:tecnicoId, code:categoriaId
+`tecnicoId`, `categoriaId`
 
-### **ticket**:
+### **ticket**
 
-code:id, code:codigo (code:TCK-2026-00147), code:asunto, code:descripcion (máx. 600), code:categoriaId, code:subcategoriaId, code:ambienteId, code:solicitanteId, code:tecnicoId|null, code:prioridad, code:prioridadSugerida, code:estado, code:creadoEn, code:venceEn, code:cerradoEn, code:solucion, code:motivoEspera, code:fechaRetorno
+`id`, `codigo` (`TCK-2026-00147`), `asunto`, `descripcion` (máx. 600), `categoriaId`, `subcategoriaId`, `ambienteId`, `solicitanteId`, `tecnicoId|null`, `prioridad`, `prioridadSugerida`, `estado`, `creadoEn`, `venceEn`, `cerradoEn`, `solucion`, `motivoEspera`, `fechaRetorno`
 
-### **bitacora\_entrada**:
+### **bitacora_entrada**
 
-code:id, code:ticketId, code:autorId, code:tipo (code:publico|interno), code:texto, code:creadoEn
+`id`, `ticketId`, `autorId`, `tipo` (`publico|interno`), `texto`, `creadoEn`
 
-### **historial\_estado**:
+### **historial_estado**
 
-code:id, code:ticketId, code:estadoAnterior, code:estadoNuevo, code:autorId, code:motivo, code:creadoEn
+`id`, `ticketId`, `estadoAnterior`, `estadoNuevo`, `autorId`, `motivo`, `creadoEn`
 
-### **asignacion**:
+### **asignacion**
 
-code:id, code:ticketId, code:tecnicoId, code:asignadoPorId, code:motivo, code:nota, code:creadoEn
+`id`, `ticketId`, `tecnicoId`, `asignadoPorId`, `motivo`, `nota`, `creadoEn`
 
-### **cambio_prioridad**:
+### **cambio_prioridad**
 
-code:id, code:ticketId, code:anterior, code:nueva, code:motivo, code:autorId, code:creadoEn
+`id`, `ticketId`, `anterior`, `nueva`, `motivo`, `autorId`, `creadoEn`
 
-### **encuesta**:
+Transiciones de estado (HU-5): `abierto → en_atencion` · `en_atencion → en_espera | resuelto` · `en_espera → en_atencion` · `resuelto → cerrado` · `cerrado → reabierto` (≤ 7 días) · `reabierto → en_atencion`. "Asignado" es un **evento** (tabla `asignacion`), no un estado.
 
-code:id, code:ticketId *(único)*, code:usuarioId, code:puntaje, code:rapidez, code:trato, code:solucion, code:comentario, code:creadoEn, code:editableHasta
-Transiciones de estado propuestas (HU-5): code:abierto → en\_atencion · code:en\_atencion → en\_espera | resuelto · code:en\_espera → en\_atencion · code:resuelto → cerrado · code:cerrado → reabierto (≤ 7 días) · code:reabierto → en\_atencion. "Asignado" es un **evento** (tabla code:asignacion), no un estado.
+## **8. Git**
 
-## **8\. Git**
-
-* Un repositorio, rama por integrante: code:feature/hu1-\&lt;nombre\&gt;, code:feature/hu2-\&lt;nombre\&gt;, etc.
-* Integración con pull request revisado por otro integrante. La rama por defecto de la plantilla es code:master.
-* Commits pequeños y con mensaje claro (code:feat(hu3): formulario de nuevo ticket). El historial cuenta para la nota individual.
-* El módulo code:components/common/ solo se modifica con PR aprobado por todos.
+* Un repositorio, rama por integrante o por cambio (`feature/hu1-<nombre>`, `refactor/roles-sesion`).
+* Integración con pull request revisado por otro integrante. La rama por defecto de la plantilla es `master`.
+* Commits pequeños y con mensaje claro (`feat(hu3): formulario de nuevo ticket`). El historial cuenta para la nota individual.
+* Los `src/widgets` comunes solo se modifican con PR aprobado por todos.
 
 ---
 
-## **9\. Observaciones al leer el Word y el PDF**
+## **9. Observaciones al leer el Word y el PDF**
 
-1. **Tiempos esperados inconsistentes en los mockups.**
-   1. La leyenda dice Crítica 2 h · Alta 8 h · Media 24 h · Baja 72 h, pero la tabla 2.1 muestra Media 8 h, Media 12 h, Baja 24 h y 48 h. Hay que fijar un criterio único en el contrato (HU-2 lo define).
-2. Adjuntos fuera de alcance. El Word excluye "carga de archivos adjuntos", pero los mockups muestran "Evidencia (opcional)" (3.1) y "Adjuntar foto" (5.2). Sugiero dejarlos solo como UI deshabilitada u omitirlos; confirmar con el docente.
-3. Sin mockup: cancelación de ticket propio (HU-3), autoasignación del técnico y reasignación (HU-4). Diseñarlos con los mismos patrones (modal de confirmación).
-4. Correos fuera de alcance. La invitación de técnico/supervisor (1.4) y la recuperación de contraseña (1.5) no envían correo real: mostrar el enlace/token en pantalla.
-5. Equipo de 5\. Se desarrollan HU-1 a HU-5; Encuestas, Tablero, Carga y Usuarios quedan ocultos del menú. El supervisor aterriza en la cola.
-6. Estado "Reabierto" aparece en el sistema de diseño pero no en la lista de estados del Word; decidir si es estado propio o vuelve a code:abierto.
-7. Entrega 1: semana 9 · Entrega final: semana 15 · Asignación de HU al docente: semana 4 (no se puede cambiar).
-
----
-
-## **10\. Orden de arranque sugerido**
-
-1. Un integrante ejecuta code:scaffold.sh, hace commit en code:master y avisa al grupo.
-2. Todos hacen code:git pull y crean su rama code:feature/hu\#-nombre.
-3. Grupo acuerda code:docs/contrato-datos.md y arma code:db/seed/seed.json con casos límite.
-4. Grupo implementa code:components/common/ (Header, Sidebar, Footer, badges, Modal, ConfirmDialog, EmptyState, Toast, Bitácora, TicketCard).
-5. HU-1 entrega primero code:AuthContext \+ code:ProtectedRoute (los demás dependen de eso).
-6. Cada HU construye sus páginas contra code:seed.json vía code:src/services.
+1. **Tiempos esperados inconsistentes en los mockups.** La leyenda dice Crítica 2 h · Alta 8 h · Media 24 h · Baja 72 h, pero la tabla 2.1 muestra otros valores. HU-2 fija el criterio en el contrato.
+2. Adjuntos fuera de alcance: "Evidencia (opcional)" (3.1) y "Adjuntar foto" (5.2) se dejan fuera.
+3. Sin mockup: cancelación de ticket propio (HU-3), autoasignación del técnico y reasignación (HU-4). Se diseñaron con los mismos patrones (modal de confirmación).
+4. Correos fuera de alcance: la invitación (1.4) y la recuperación de contraseña (1.5) muestran el enlace en pantalla.
+5. Equipo de 5: se desarrollan HU-1 a HU-5; Encuestas, Tablero, Carga y Usuarios no existen en el menú. El supervisor aterriza en la cola.
+6. Estado "Reabierto" se maneja como estado propio.
+7. Entrega 1: semana 9 · Entrega final: semana 15.

@@ -11,7 +11,7 @@ import FileStore from 'session-file-store';
 import fs from 'fs';
 import crypto from 'crypto';
 
-import websiteRoutes from '../website/routes.js';
+import websiteRoutes from '../website/configs/routes.js';
 import adminRoutes from '../admin/configs/routes.js';
 import { notFoundHandler, viewFlash, viewEnv, viewSession, viewHelpers } from './middlewares.js';
 
@@ -131,8 +131,8 @@ export default function bootstrap(app) {
   app.locals.adminEmail = process.env.ADMIN_EMAIL || 'admin@ejemplo.com';
 
   // Rutas Web
-  app.use('/', websiteRoutes);
   app.use('/', adminRoutes);
+  app.use('/', websiteRoutes);
 
   // Para SPA de React - Redirigir todas las rutas no encontradas al index.html
   /*
