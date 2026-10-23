@@ -1,0 +1,6 @@
+/* src/pages/tecnico/tecnico.css */
+/* Estilos solo de la mini-app del técnico (tecnico.js).
+   Lo común a todos los roles está en src/entries/app.css (se compila en css/app.css).
+   Por ahora no hay estilos exclusivos: Bandeja usa los comunes (table-app, prio-bar, stat-pill) y
+   DetalleTicket e HistorialCambios (HU-5) también los monta el supervisor, así que sus estilos
+   (composer, option-card, timeline, btn-warning...) se quedan en app.css. */
