@@ -1,0 +1,96 @@
+<!-- views/visitante/login.ejs -->
+<!-- HU-1 · 1.2 Inicio de sesión · Visitante (el login se valida en el servidor) -->
+<% layout("layouts/access") %>
+<%
+  const cuentasPrueba = [
+    { rol: 'Usuario', email: 'camila.quispe@aloe.ulima.edu.pe' },
+    { rol: 'Técnico', email: 'jparedes@ulima.edu.pe' },
+    { rol: 'Supervisor', email: 'lmendoza@ulima.edu.pe' },
+  ];
+  const invalido = typeof credenciales !== 'undefined' && credenciales;
+%>
+
+<div class="row g-4 justify-content-center">
+  <div class="col-md-7 col-lg-5">
+    <div class="card p-4">
+      <h1 class="mb-1">Iniciar sesión</h1>
+      <p class="text-muted">Ingresa con tu correo institucional.</p>
+
+      <% if (mensaje) { %>
+        <div class="alert alert-danger small" role="alert">
+          <%= mensaje %>
+          <% if (typeof bloqueado !== 'undefined' && bloqueado) { %>
+            <div class="d-flex gap-2 mt-2">
+              <a href="/recuperar" class="btn btn-sm btn-primary">Restablecer contraseña</a>
+              <a href="mailto:soporte.campus@ulima.edu.pe" class="btn btn-sm btn-outline-primary">Escribir a soporte</a>
+            </div>
+          <% } %>
+        </div>
+      <% } %>
+
+      <form id="formLogin" action="/login" method="POST" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="email">Correo institucional</label>
+          <input id="email" name="email" type="email" autocomplete="username" class="form-control <%= invalido ? 'is-invalid' : '' %>" value="<%= email %>" placeholder="nombre@aloe.ulima.edu.pe" required>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" for="password">Contraseña</label>
+          <div class="input-group has-validation">
+            <input id="password" name="password" type="password" autocomplete="current-password" class="form-control <%= invalido ? 'is-invalid' : '' %>" required>
+            <button id="btnMostrar" type="button" class="btn btn-outline-primary">Mostrar</button>
+            <% if (invalido) { %><div class="invalid-feedback">Verifica tus datos e inténtalo otra vez.</div><% } %>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="recordar" name="recordar" value="1" checked>
+            <label class="form-check-label small" for="recordar">Recordarme en este equipo</label>
+          </div>
+          <a href="/recuperar" class="small">¿Olvidaste tu contraseña?</a>
+        </div>
+        <button id="btnIngresar" type="submit" class="btn btn-primary w-100">Ingresar</button>
+      </form>
+      <p class="text-center small mt-3 mb-0">¿No tienes cuenta? <a href="/registro">Regístrate</a></p>
+    </div>
+  </div>
+  <div class="col-md-5 col-lg-4">
+    <div class="card p-4 mb-3">
+      <h3>Acceso por rol</h3>
+      <p class="small text-muted">Usuarios de la comunidad ingresan con su correo. Técnicos y supervisores reciben una invitación del área de Infraestructura y definen su contraseña al aceptarla.</p>
+      <div class="surface-soft small p-2">Tras cinco intentos fallidos la cuenta se bloquea por 15 minutos.</div>
+    </div>
+    <div class="card p-3">
+      <div class="label-caps mb-2">Cuentas de prueba · contraseña Ulima2026</div>
+      <% cuentasPrueba.forEach((c) => { %>
+        <button type="button" class="btn btn-sm btn-outline-primary w-100 text-start mb-2 cuenta-prueba" data-email="<%= c.email %>">
+          <strong><%= c.rol %></strong> · <span class="font-mono small"><%= c.email %></span>
+        </button>
+      <% }) %>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mostrar u ocultar la contraseña
+  document.getElementById('btnMostrar').addEventListener('click', function () {
+    const input = document.getElementById('password');
+    const mostrar = input.type === 'password';
+    input.type = mostrar ? 'text' : 'password';
+    this.textContent = mostrar ? 'Ocultar' : 'Mostrar';
+  });
+
+  // Botones de cuentas de prueba: rellenan el formulario
+  document.querySelectorAll('.cuenta-prueba').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.getElementById('email').value = btn.dataset.email;
+      document.getElementById('password').value = 'Ulima2026';
+    });
+  });
+
+  // Estado de carga al enviar
+  document.getElementById('formLogin').addEventListener('submit', function () {
+    const btn = document.getElementById('btnIngresar');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>Ingresando…';
+  });
+</script>
